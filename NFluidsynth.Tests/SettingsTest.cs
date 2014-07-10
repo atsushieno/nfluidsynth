@@ -16,6 +16,7 @@ namespace NFluidsynth.Tests
 			Assert.AreEqual ("alsa_seq", c [ConfigurationKeys.MidiDriver].StringValue, ConfigurationKeys.MidiDriver);
 			Assert.AreEqual ("jack", c [ConfigurationKeys.AudioDriver].StringValue, ConfigurationKeys.AudioDriver);
 			Assert.AreEqual (0, c [ConfigurationKeys.SynthDeviceId].IntValue, ConfigurationKeys.SynthDeviceId);
+			Assert.AreEqual (256, c [ConfigurationKeys.SynthPolyphony].IntValue, ConfigurationKeys.SynthPolyphony);
 			c.Dispose ();
 		}
 	}

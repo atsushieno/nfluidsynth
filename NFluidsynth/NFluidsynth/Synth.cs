@@ -25,6 +25,16 @@ namespace NFluidsynth
 
 	public class Synth : FluidsynthObject
 	{
+		public static bool IsSoundFont (string filename)
+		{
+			return LibFluidsynth.Misc.fluid_is_soundfont (filename);
+		}
+
+		public static bool IsMidiFile (string filename)
+		{
+			return LibFluidsynth.Misc.fluid_is_midifile (filename);
+		}
+
 		public Synth (Settings settings)
 			: base (LibFluidsynth.Synth.new_fluid_synth (settings.Handle), true)
 		{
