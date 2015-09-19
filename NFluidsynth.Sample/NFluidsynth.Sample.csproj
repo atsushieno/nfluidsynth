@@ -37,7 +37,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\NFluidsynth\NFluidsynth.csproj">
-      <Project>{C6BDB77F-D186-4EAE-982B-D83FD282321F}</Project>
+      <Project>{79326AFF-EA30-479B-A48E-77CF5AB99EF4}</Project>
       <Name>NFluidsynth</Name>
     </ProjectReference>
   </ItemGroup>

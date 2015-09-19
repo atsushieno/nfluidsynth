@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth.Tests", "NFluidsynth.Tests\NFluidsynth.Tests.csproj", "{E5DBFB0B-35A4-4351-A612-1AF1F7CD71F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth", "NFluidsynth\NFluidsynth.csproj", "{C6BDB77F-D186-4EAE-982B-D83FD282321F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth.Sample", "NFluidsynth.Sample\NFluidsynth.Sample.csproj", "{578306D3-021B-437E-94E8-9A65FDCBC139}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons.Music.Midi", "external\managed-midi\lib\Commons.Music.Midi.csproj", "{D2FFA1EE-91DD-477D-8965-1E43CB0CBB69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth", "NFluidsynth\NFluidsynth.csproj", "{79326AFF-EA30-479B-A48E-77CF5AB99EF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth.MidiAccess", "NFluidsynth.MidiAccess\NFluidsynth.MidiAccess.csproj", "{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +21,22 @@ Global
 		{578306D3-021B-437E-94E8-9A65FDCBC139}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{578306D3-021B-437E-94E8-9A65FDCBC139}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{578306D3-021B-437E-94E8-9A65FDCBC139}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C6BDB77F-D186-4EAE-982B-D83FD282321F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6BDB77F-D186-4EAE-982B-D83FD282321F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6BDB77F-D186-4EAE-982B-D83FD282321F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6BDB77F-D186-4EAE-982B-D83FD282321F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E5DBFB0B-35A4-4351-A612-1AF1F7CD71F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E5DBFB0B-35A4-4351-A612-1AF1F7CD71F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5DBFB0B-35A4-4351-A612-1AF1F7CD71F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5DBFB0B-35A4-4351-A612-1AF1F7CD71F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2FFA1EE-91DD-477D-8965-1E43CB0CBB69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2FFA1EE-91DD-477D-8965-1E43CB0CBB69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2FFA1EE-91DD-477D-8965-1E43CB0CBB69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2FFA1EE-91DD-477D-8965-1E43CB0CBB69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79326AFF-EA30-479B-A48E-77CF5AB99EF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79326AFF-EA30-479B-A48E-77CF5AB99EF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79326AFF-EA30-479B-A48E-77CF5AB99EF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79326AFF-EA30-479B-A48E-77CF5AB99EF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = NFluidsynth.Sample\NFluidsynth.Sample.csproj
