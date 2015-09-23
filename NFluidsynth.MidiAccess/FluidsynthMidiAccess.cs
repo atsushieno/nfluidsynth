@@ -14,12 +14,24 @@ namespace NFluidsynth.MidiManager
 			output = new FluidsynthMidiOutput (this);
 		}
 
-		public IEnumerable<IMidiInput> Inputs {
-			get { return Enumerable.Empty<IMidiInput> (); }
+		public IEnumerable<IMidiPortDetails> Inputs {
+			get { return Enumerable.Empty<IMidiPortDetails> (); }
 		}
 
-		public IEnumerable<IMidiOutput> Outputs {
-			get { return Enumerable.Repeat (output, 1); }
+		public IEnumerable<IMidiPortDetails> Outputs {
+			get { return Enumerable.Repeat (output.Details, 1); }
+		}
+		
+		public Task<IMidiInput> OpenInputAsync (string portId)
+		{
+			throw new NotSupportedException ();
+		}
+		
+		public Task<IMidiOutput> OpenOutputAsync (string portId)
+		{
+			if (portId != output.Details.Id)
+				throw new ArgumentException (string.Format ("Port {0} does not exist.", portId));
+			return output.OpenAsync ().ContinueWith (t => (IMidiOutput) output);
 		}
 
 		public IList<string> Soundfonts { get; private set; }
@@ -104,36 +116,36 @@ namespace NFluidsynth.MidiManager
 			return Task.FromResult (true);
 		}
 
-		public Task SendAsync (byte [] msg, int length, long timestamp)
+		public Task SendAsync (byte [] msg, int offset, int length, long timestamp)
 		{
-			int ch = msg [0] & 0x0F;
-			switch (msg [0] & 0xF0) {
+			int ch = msg [offset] & 0x0F;
+			switch (msg [offset] & 0xF0) {
 			case 0x80:
-				synth.NoteOff (ch, msg [1]);
+				synth.NoteOff (ch, msg [offset + 1]);
 				break;
 			case 0x90:
-				if (msg [2] == 0)
-					synth.NoteOff (ch, msg [1]);
+				if (msg [offset + 2] == 0)
+					synth.NoteOff (ch, msg [offset + 1]);
 				else
-					synth.NoteOn (ch, msg [1], msg [2]);
+					synth.NoteOn (ch, msg [offset + 1], msg [offset + 2]);
 				break;
 			case 0xA0:
 				// No PAf in fluidsynth?
 				break;
 			case 0xB0:
-				synth.CC (ch, msg [1], msg [2]);
+				synth.CC (ch, msg [offset + 1], msg [offset + 2]);
 				break;
 			case 0xC0:
-				synth.ProgramChange (ch, msg [1]);
+				synth.ProgramChange (ch, msg [offset + 1]);
 				break;
 			case 0xD0:
-				synth.ChannelPressure (ch, msg [1]);
+				synth.ChannelPressure (ch, msg [offset + 1]);
 				break;
 			case 0xE0:
-				synth.PitchBend (ch, (msg [1] << 14) + msg [2]);
+				synth.PitchBend (ch, (msg [offset + 1] << 14) + msg [offset + 2]);
 				break;
 			case 0xF0:
-				synth.Sysex (new ArraySegment<byte> (msg, 0, length).ToArray (), null);
+				synth.Sysex (new ArraySegment<byte> (msg, offset, length).ToArray (), null);
 				break;
 			}
 			return completed_task;
