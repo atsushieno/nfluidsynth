@@ -13,7 +13,7 @@ namespace NFluidsynth.MidiManager
 			Soundfonts = new List<string> ();
 			output = new FluidsynthMidiOutput (this);
 		}
-
+		
 		public IEnumerable<IMidiPortDetails> Inputs {
 			get { return Enumerable.Empty<IMidiPortDetails> (); }
 		}
@@ -33,8 +33,10 @@ namespace NFluidsynth.MidiManager
 				throw new ArgumentException (string.Format ("Port {0} does not exist.", portId));
 			return output.OpenAsync ().ContinueWith (t => (IMidiOutput) output);
 		}
-
+		
 		public IList<string> Soundfonts { get; private set; }
+		
+		public Action<Settings> ConfigureSettings;
 
 		public event EventHandler<MidiConnectionEventArgs> StateChanged; // won't detect...
 
@@ -95,6 +97,9 @@ namespace NFluidsynth.MidiManager
 			if (settings != null)
 				settings.Dispose ();
 			settings = null;
+			if (adriver != null)
+				adriver.Dispose ();
+			adriver = null;
 			return Task.FromResult (true);
 		}
 
@@ -103,16 +108,22 @@ namespace NFluidsynth.MidiManager
 			CloseAsync ().Wait ();
 		}
 
-		Settings settings;
 		Synth synth;
+		Settings settings;
+		AudioDriver adriver;
 
 		public Task OpenAsync ()
 		{
-			if (settings != null)
+			if (synth != null)
 				throw new InvalidOperationException ("The MIDI output is already open.");
 			settings = new Settings ();
+			midi_access.ConfigureSettings (settings);
 			synth = new Synth (settings);
+			foreach (var sf in Soundfonts)
+				synth.LoadSoundFont (sf, false);
 
+			adriver = new AudioDriver (synth.Settings, synth);
+			
 			return Task.FromResult (true);
 		}
 
