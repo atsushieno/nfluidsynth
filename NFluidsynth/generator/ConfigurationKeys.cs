@@ -20,7 +20,7 @@ namespace NFluidsynth
 		public const string SynthPolyphony = "synth.polyphony";
 		public const string SynthReverbActive = "synth.reverb.active";
 		public const string SynthSampleRate = "synth.sample-rate";
-		public const string SynthThreadsafeApi = "synth.threadsafe-api";
+		public const string SynthThreadSafeApi = "synth.threadsafe-api";
 		public const string SynthVerbose = "synth.verbose";
 		public const string AudioDriver = "audio.driver";
 		public const string AudioPeriods = "audio.periods";
@@ -28,7 +28,7 @@ namespace NFluidsynth
 		public const string AudioRealtimePrio = "audio.realtime-prio";
 		public const string AudioSampleFormat = "audio.sample-format";
 		public const string AudioAlsaDevice = "audio.alsa.device";
-		public const string AudioCoreaudioDevice = "audio.coreaudio.device";
+		public const string AudioCoreAudioDevice = "audio.coreaudio.device";
 		public const string AudioDartDevice = "audio.dart.device";
 		public const string AudioDsoundDevice = "audio.dsound.device";
 		public const string AudioFileEndian = "audio.file.endian";
@@ -44,14 +44,14 @@ namespace NFluidsynth
 		public const string AudioPulseaudioDevice = "audio.pulseaudio.device";
 		public const string AudioPulseaudioServer = "audio.pulseaudio.server";
 		public const string MidiDriver = "midi.driver";
-		public const string MidiRealtimePrio = "midi.realtime-prio";
+		public const string MidiRealTimePriority = "midi.realtime-prio";
 		public const string MidiAlsaDevice = "midi.alsa.device";
-		public const string MidiAlsa_seqDevice = "midi.alsa_seq.device";
-		public const string MidiAlsa_seqId = "midi.alsa_seq.id";
+		public const string MidiAlsaSeqDevice = "midi.alsa_seq.device";
+		public const string MidiAlsaSeqId = "midi.alsa_seq.id";
 		public const string MidiJackId = "midi.jack.id";
 		public const string MidiJackServer = "midi.jack.server";
 		public const string MidiOssDevice = "midi.oss.device";
-		public const string MidiPortname = "midi.portname";
+		public const string MidiPortName = "midi.portname";
 	}
 }
 
