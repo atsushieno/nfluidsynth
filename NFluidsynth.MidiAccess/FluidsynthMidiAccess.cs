@@ -117,7 +117,8 @@ namespace NFluidsynth.MidiManager
 			if (synth != null)
 				throw new InvalidOperationException ("The MIDI output is already open.");
 			settings = new Settings ();
-			midi_access.ConfigureSettings (settings);
+			if (midi_access.ConfigureSettings != null)
+				midi_access.ConfigureSettings (settings);
 			synth = new Synth (settings);
 			foreach (var sf in Soundfonts)
 				synth.LoadSoundFont (sf, false);
