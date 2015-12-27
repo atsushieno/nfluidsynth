@@ -9,10 +9,17 @@ namespace NFluidsynth.MidiManager
 	public class FluidsynthMidiAccess : IMidiAccess
 	{
 		public FluidsynthMidiAccess ()
+			: this (4)
+		{
+		}
+		public FluidsynthMidiAccess (int ports)
 		{
 			Soundfonts = new List<string> ();
-			output = new FluidsynthMidiOutput (this);
+			foreach (var m in Enumerable.Range (1, ports + 1).Select (i => new FluidsynthMidiOutput (this, "id" + i)))
+				outputs.Add (m.Details.Id, m);
 		}
+		
+		Dictionary<string,FluidsynthMidiOutput> outputs = new Dictionary<string, FluidsynthMidiOutput> ();
 		
 		public Synth.ErrorHandler HandleNativeError { get; set; }
 		
@@ -21,7 +28,7 @@ namespace NFluidsynth.MidiManager
 		}
 
 		public IEnumerable<IMidiPortDetails> Outputs {
-			get { return Enumerable.Repeat (output.Details, 1); }
+			get { return outputs.Values.Select (m => m.Details); }
 		}
 		
 		public Task<IMidiInput> OpenInputAsync (string portId)
@@ -31,7 +38,8 @@ namespace NFluidsynth.MidiManager
 		
 		public Task<IMidiOutput> OpenOutputAsync (string portId)
 		{
-			if (portId != output.Details.Id)
+			FluidsynthMidiOutput output;
+			if (!outputs.TryGetValue (portId, out output))
 				throw new ArgumentException (string.Format ("Port {0} does not exist.", portId));
 			return output.OpenAsync ().ContinueWith (t => (IMidiOutput) output);
 		}
@@ -41,15 +49,16 @@ namespace NFluidsynth.MidiManager
 		public Action<Settings> ConfigureSettings;
 
 		public event EventHandler<MidiConnectionEventArgs> StateChanged; // won't detect...
-
-		FluidsynthMidiOutput output;
 	}
 
 	class FluidsynthMidiOutputDetails : IMidiPortDetails
 	{
-		public string Id {
-			get { return "id0"; }
+		public FluidsynthMidiOutputDetails (string portId)
+		{
+			Id = portId;
 		}
+
+		public string Id { get; private set; }
 
 		public string Manufacturer {
 			get { return "fluidsynth project"; }
@@ -68,12 +77,12 @@ namespace NFluidsynth.MidiManager
 	{
 		static Task completed_task = Task.FromResult (false);
 
-		public FluidsynthMidiOutput (FluidsynthMidiAccess midiAccess)
+		public FluidsynthMidiOutput (FluidsynthMidiAccess midiAccess, string portId)
 		{
 			if (midiAccess == null)
 				throw new ArgumentNullException ("midiAccess");
 			midi_access = midiAccess;
-			Details = new FluidsynthMidiOutputDetails ();
+			Details = new FluidsynthMidiOutputDetails (portId);
 		}
 
 		public MidiPortConnectionState Connection { get; private set; }
@@ -93,15 +102,18 @@ namespace NFluidsynth.MidiManager
 
 		public Task CloseAsync ()
 		{
+			if (adriver != null)
+				adriver.Dispose ();
+			adriver = null;
 			if (synth != null)
 				synth.Dispose ();
 			synth = null;
 			if (settings != null)
 				settings.Dispose ();
 			settings = null;
-			if (adriver != null)
-				adriver.Dispose ();
-			adriver = null;
+
+			State = MidiPortDeviceState.Disconnected;
+			
 			return Task.FromResult (true);
 		}
 
@@ -127,12 +139,17 @@ namespace NFluidsynth.MidiManager
 				synth.LoadSoundFont (sf, false);
 
 			adriver = new AudioDriver (synth.Settings, synth);
-			
+
+			State = MidiPortDeviceState.Connected;
+
 			return Task.FromResult (true);
 		}
 
 		public Task SendAsync (byte [] msg, int offset, int length, long timestamp)
 		{
+			if (synth == null)
+				throw new InvalidOperationException ("The MIDI output is not open.");
+			
 			int ch = msg [offset] & 0x0F;
 			switch (msg [offset] & 0xF0) {
 			case 0x80:
