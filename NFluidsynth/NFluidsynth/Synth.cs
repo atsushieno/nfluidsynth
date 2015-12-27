@@ -53,31 +53,42 @@ namespace NFluidsynth
 		public Settings Settings {
 			get { return new Settings (LibFluidsynth.Synth.fluid_synth_get_settings (Handle)); }
 		}
+		
+		public delegate bool ErrorHandler (string messageManaged, string messageNative);
+		
+		public ErrorHandler HandleError { get; set; }
+		
+		void OnError (string message)
+		{
+			string err = LastError;
+			if (HandleError == null || !HandleError (message, err))
+				throw new FluidSynthInteropException (message + " (native error: " + err + ")");
+		}
 
 		public void NoteOn (int channel, int key, int vel)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_noteon (Handle, channel, key, vel) != 0)
-				throw new FluidSynthInteropException ("noteon operation failed " + LastError);
+				OnError ("noteon operation failed");
 		}
 
 		public void NoteOff (int channel, int key)
 		{
 			// not sure if we should always raise exception, it seems that it also returns FUILD_FAILED for not-on-state note.
 			if (LibFluidsynth.Synth.fluid_synth_noteoff (Handle, channel, key) != 0)
-				throw new FluidSynthInteropException ("noteoff operation failed " + LastError);
+				OnError ("noteoff operation failed");
 		}
 
 		public void CC (int channel, int num, int val)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_cc (Handle, channel, num, val) != 0)
-				throw new FluidSynthInteropException ("control change operation failed " + LastError);
+				OnError ("control change operation failed");
 		}
 
 		public int GetCC (int channel, int num)
 		{
 			int ret;
 			if (LibFluidsynth.Synth.fluid_synth_get_cc (Handle, channel, num, out ret) != 0)
-				throw new FluidSynthInteropException ("control change get operation failed " + LastError);
+				OnError ("control change get operation failed");
 			return ret;
 		}
 
@@ -86,104 +97,104 @@ namespace NFluidsynth
 			int outlen = output != null ? output.Length : 0;
 			bool handled;
 			if (LibFluidsynth.Synth.fluid_synth_sysex (Handle, input, input.Length, output, ref outlen, out handled, dryrun) != 0)
-				throw new FluidSynthInteropException ("sysex operation failed " + LastError);
+				OnError ("sysex operation failed");
 			return handled;
 		}
 
 		public void PitchBend (int channel, int val)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_pitch_bend (Handle, channel, val) != 0)
-				throw new FluidSynthInteropException ("pitch bend change operation failed " + LastError);
+				OnError ("pitch bend change operation failed");
 		}
 
 		public int GetPitchBend (int channel)
 		{
 			int ret;
 			if (LibFluidsynth.Synth.fluid_synth_get_pitch_bend (Handle, channel, out ret) != 0)
-				throw new FluidSynthInteropException ("pitch bend get operation failed " + LastError);
+				OnError ("pitch bend get operation failed");
 			return ret;
 		}
 
 		public void PitchWheelSens (int channel, int val)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_pitch_wheel_sens (Handle, channel, val) != 0)
-				throw new FluidSynthInteropException ("pitch wheel sens change operation failed " + LastError);
+				OnError ("pitch wheel sens change operation failed");
 		}
 
 		public int GetPitchWheelSens (int channel)
 		{
 			int ret;
 			if (LibFluidsynth.Synth.fluid_synth_get_pitch_wheel_sens (Handle, channel, out ret) != 0)
-				throw new FluidSynthInteropException ("pitch wheel sens get operation failed " + LastError);
+				OnError ("pitch wheel sens get operation failed");
 			return ret;
 		}
 
 		public void ProgramChange (int channel, int program)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_program_change (Handle, channel, program) != 0)
-				throw new FluidSynthInteropException ("program change operation failed " + LastError);
+				OnError ("program change operation failed");
 		}
 
 		public void ChannelPressure (int channel, int val)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_channel_pressure (Handle, channel, val) != 0)
-				throw new FluidSynthInteropException ("channel pressure change operation failed " + LastError);
+				OnError ("channel pressure change operation failed");
 		}
 
 		public void BankSelect (int channel, uint bank)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_bank_select (Handle, channel, bank) != 0)
-				throw new FluidSynthInteropException ("bank select operation failed " + LastError);
+				OnError ("bank select operation failed");
 		}
 
 		public void SoundFontSelect (int channel, uint soundFontId)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_sfont_select (Handle, channel, soundFontId) != 0)
-				throw new FluidSynthInteropException ("sound font select operation failed " + LastError);
+				OnError ("sound font select operation failed");
 		}
 
 		public void ProgramSelect (int channel, uint soundFontId, uint bank, uint preset)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_program_select (Handle, channel, soundFontId, bank, preset) != 0)
-				throw new FluidSynthInteropException ("program select operation failed " + LastError);
+				OnError ("program select operation failed");
 		}
 
 		public void ProgramSelectBySoundFontName (int channel, string soundFontName, uint bank, uint preset)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_program_select_by_sfont_name (Handle, channel, soundFontName, bank, preset) != 0)
-				throw new FluidSynthInteropException ("program select (by sound font name) operation failed " + LastError);
+				OnError ("program select (by sound font name) operation failed");
 		}
 
 		public void GetProgram (int channel, out int soundFontId, out int bank, out int preset)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_get_program (Handle, channel, out soundFontId, out bank, out preset) != 0)
-				throw new FluidSynthInteropException ("program get operation failed " + LastError);
+				OnError ("program get operation failed");
 		}
 
 		public void UnsetProgram (int channel)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_unset_program (Handle, channel) != 0)
-				throw new FluidSynthInteropException ("program unset operation failed " + LastError);
+				OnError ("program unset operation failed");
 		}
 
 		public IntPtr GetChannelInfo (int channel)
 		{
 			IntPtr info;
 			if (LibFluidsynth.Synth.fluid_synth_get_channel_info (Handle, channel, out info) != 0)
-				throw new FluidSynthInteropException ("channel info get operation failed " + LastError);
+				OnError ("channel info get operation failed");
 			return info;
 		}
 
 		public void ProgramReset ()
 		{
 			if (LibFluidsynth.Synth.fluid_synth_program_reset (Handle) != 0)
-				throw new FluidSynthInteropException ("program reset operation failed " + LastError);
+				OnError ("program reset operation failed");
 		}
 
 		public void SystemReset ()
 		{
 			if (LibFluidsynth.Synth.fluid_synth_system_reset (Handle) != 0)
-				throw new FluidSynthInteropException ("system reset operation failed " + LastError);
+				OnError ("system reset operation failed");
 		}
 
 		// fluid_synth_get_channel_preset() is deprecated, so I don't bind it.
@@ -193,25 +204,25 @@ namespace NFluidsynth
 		public void LoadSoundFont (string filename, bool resetPresets)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_sfload (Handle, filename, resetPresets) < 0)
-				throw new FluidSynthInteropException ("sound font load operation failed " + LastError);
+				OnError ("sound font load operation failed");
 		}
 
 		public void ReloadSoundFont (uint id)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_sfreload (Handle, id) != 0)
-				throw new FluidSynthInteropException ("sound font reload operation failed " + LastError);
+				OnError ("sound font reload operation failed");
 		}
 
 		public void UnloadSoundFont (uint id, bool resetPresets)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_sfunload (Handle, id, resetPresets) != 0)
-				throw new FluidSynthInteropException ("sound font unload operation failed " + LastError);
+				OnError ("sound font unload operation failed");
 		}
 
 		public void AddSoundFont (SoundFont soundFont)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_add_sfont (Handle, soundFont.Handle) != 0)
-				throw new FluidSynthInteropException ("sound font add operation failed " + LastError);
+				OnError ("sound font add operation failed");
 		}
 
 		public void RemoveSoundFont (SoundFont soundFont)
@@ -244,7 +255,7 @@ namespace NFluidsynth
 		public void SetBankOffset (int soundFontId, int offset)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_set_bank_offset (Handle, soundFontId, offset) != 0)
-				throw new FluidSynthInteropException ("bank offset set operation failed " + LastError);
+				OnError ("bank offset set operation failed");
 		}
 
 		public void GetBankOffset (int soundFontId)
@@ -350,19 +361,19 @@ namespace NFluidsynth
 		public void SetInterpolationMethod (int channel, FluidInterpolation interpolationMethod)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_set_interp_method (Handle, channel, interpolationMethod) != 0)
-				throw new FluidSynthInteropException ("interpolation method set operation failed " + LastError);
+				OnError ("interpolation method set operation failed");
 		}
 
 		public void SetGenerator (int channel, int param, float value)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_set_gen (Handle, channel, param, value) != 0)
-				throw new FluidSynthInteropException ("generator set operation failed " + LastError);
+				OnError ("generator set operation failed");
 		}
 
 		public void SetGenerator (int channel, int param, float value, bool absolute, bool normalized)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_set_gen2 (Handle, channel, param, value, absolute, normalized) != 0)
-				throw new FluidSynthInteropException ("generator set2 operation failed " + LastError);
+				OnError ("generator set2 operation failed");
 		}
 
 		public float GetGenerator (int channel, int param)
@@ -379,7 +390,7 @@ namespace NFluidsynth
 			if (pitch.Length != 128)
 				throw new ArgumentException ("pitch array must be of 128 elements.");
 			if (LibFluidsynth.Synth.fluid_synth_create_key_tuning (Handle, bank, prog, name, pitch) != 0)
-				throw new FluidSynthInteropException ("key tuning create operation failed " + LastError);
+				OnError ("key tuning create operation failed");
 		}
 
 		public void ActivateKeyTuning (int bank, int prog, string name, double [] pitch, bool apply)
@@ -389,7 +400,7 @@ namespace NFluidsynth
 			if (pitch.Length != 128)
 				throw new ArgumentException ("pitch array must be of 128 elements.");
 			if (LibFluidsynth.Synth.fluid_synth_activate_key_tuning (Handle, bank, prog, name, pitch, apply) != 0)
-				throw new FluidSynthInteropException ("key tuning create operation failed " + LastError);
+				OnError ("key tuning create operation failed");
 		}
 
 		public void CreateOctaveTuning (int bank, int prog, string name, double [] pitch)
@@ -399,7 +410,7 @@ namespace NFluidsynth
 			if (pitch.Length != 128)
 				throw new ArgumentException ("pitch array must be of 128 elements.");
 			if (LibFluidsynth.Synth.fluid_synth_create_octave_tuning (Handle, bank, prog, name, pitch) != 0)
-				throw new FluidSynthInteropException ("key tuning create operation failed " + LastError);
+				OnError ("key tuning create operation failed");
 		}
 
 		public void ActivateOctaveTuning (int bank, int prog, string name, double [] pitch, bool apply)
@@ -409,7 +420,7 @@ namespace NFluidsynth
 			if (pitch.Length != 128)
 				throw new ArgumentException ("pitch array must be of 128 elements.");
 			if (LibFluidsynth.Synth.fluid_synth_activate_octave_tuning (Handle, bank, prog, name, pitch, apply) != 0)
-				throw new FluidSynthInteropException ("key tuning create operation failed " + LastError);
+				OnError ("key tuning create operation failed");
 		}
 
 		public void TuneNotes (int bank, int prog, int[] keys, double[] pitch, bool apply)
@@ -423,31 +434,31 @@ namespace NFluidsynth
 			if (pitch.Length != 128)
 				throw new ArgumentException ("pitch array must be of 128 elements.");
 			if (LibFluidsynth.Synth.fluid_synth_tune_notes (Handle, bank, prog, keys.Length, keys, pitch, apply) != 0)
-				throw new FluidSynthInteropException ("key tuning create operation failed " + LastError);
+				OnError ("key tuning create operation failed");
 		}
 
 		public void SelectTuning (int channel, int bank, int prog)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_select_tuning (Handle, channel, bank, prog) != 0)
-				throw new FluidSynthInteropException ("tuning select operation failed " + LastError);
+				OnError ("tuning select operation failed");
 		}
 
 		public void ActivateTuning (int channel, int bank, int prog, bool apply)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_activate_tuning (Handle, channel, bank, prog, apply) != 0)
-				throw new FluidSynthInteropException ("tuning activate operation failed " + LastError);
+				OnError ("tuning activate operation failed");
 		}
 
 		public void ResetTuning (int channel)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_reset_tuning (Handle, channel) != 0)
-				throw new FluidSynthInteropException ("tuning reset operation failed " + LastError);
+				OnError ("tuning reset operation failed");
 		}
 
 		public void DeactivateTuning (int channel, bool apply)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_deactivate_tuning (Handle, channel, apply) != 0)
-				throw new FluidSynthInteropException ("tuning deactivate operation failed " + LastError);
+				OnError ("tuning deactivate operation failed");
 		}
 
 		public void TuningIterationStart ()
@@ -485,26 +496,26 @@ namespace NFluidsynth
 		public void WriteSample16 (int length, ushort [] leftOut, int leftOffset, int leftIncrement, ushort [] rightOut, int rightOffset, int rightIncrement)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_write_s16 (Handle, length, leftOut, leftOffset, leftIncrement, rightOut, rightOffset, rightIncrement) != 0)
-				throw new FluidSynthInteropException ("16bit sample write operation failed " + LastError);
+				OnError ("16bit sample write operation failed");
 		}
 
 		public void WriteSampleFloat (int length, float [] leftOut, int leftOffset, int leftIncrement, float [] rightOut, int rightOffset, int rightIncrement)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_write_float (Handle, length, leftOut, leftOffset, leftIncrement, rightOut, rightOffset, rightIncrement) != 0)
-				throw new FluidSynthInteropException ("float sample write operation failed " + LastError);
+				OnError ("float sample write operation failed");
 		}
 
 		public void WriteSampleFloat (int length, out float [] leftOut, out float [] rightOut)
 		{
 			float [] dummy, dummy2;
 			if (LibFluidsynth.Synth.fluid_synth_nwrite_float (Handle, length, out leftOut, out rightOut, out dummy, out dummy2) != 0)
-				throw new FluidSynthInteropException ("float sample write operation failed " + LastError);
+				OnError ("float sample write operation failed");
 		}
 
 		public void Process (int length, int nIn, float [] inBuffer, int nOut, float [] outBuffer)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_process (Handle, length, nIn, inBuffer, nOut, outBuffer) != 0)
-				throw new FluidSynthInteropException ("float sample write operation failed " + LastError);
+				OnError ("float sample write operation failed");
 		}
 
 		public void AddSoundFontLoader (IntPtr loader)
@@ -516,7 +527,7 @@ namespace NFluidsynth
 		{
 			var ret = LibFluidsynth.Synth.fluid_synth_alloc_voice (Handle, sample, channel, key, vel);
 			if (ret == IntPtr.Zero)
-				throw new FluidSynthInteropException ("voice allocate operation failed " + LastError);
+				OnError ("voice allocate operation failed");
 			return new Voice (ret);
 		}
 
@@ -540,7 +551,7 @@ namespace NFluidsynth
 		public void HandleMidiEvent (IntPtr midiEvent)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_handle_midi_event (Handle, midiEvent) != 0)
-				throw new FluidSynthInteropException ("midi event handle operation failed " + LastError);
+				OnError ("midi event handle operation failed");
 		}
 
 		public void SetMidiRouter (IntPtr router)

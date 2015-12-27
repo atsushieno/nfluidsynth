@@ -14,6 +14,8 @@ namespace NFluidsynth.MidiManager
 			output = new FluidsynthMidiOutput (this);
 		}
 		
+		public Synth.ErrorHandler HandleNativeError { get; set; }
+		
 		public IEnumerable<IMidiPortDetails> Inputs {
 			get { return Enumerable.Empty<IMidiPortDetails> (); }
 		}
@@ -120,6 +122,7 @@ namespace NFluidsynth.MidiManager
 			if (midi_access.ConfigureSettings != null)
 				midi_access.ConfigureSettings (settings);
 			synth = new Synth (settings);
+			synth.HandleError = midi_access.HandleNativeError;
 			foreach (var sf in Soundfonts)
 				synth.LoadSoundFont (sf, false);
 
