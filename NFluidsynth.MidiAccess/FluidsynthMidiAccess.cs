@@ -174,7 +174,7 @@ namespace NFluidsynth.MidiManager
 				synth.ChannelPressure (ch, msg [offset + 1]);
 				break;
 			case 0xE0:
-				synth.PitchBend (ch, (msg [offset + 1] << 14) + msg [offset + 2]);
+				synth.PitchBend (ch, msg [offset + 1] + msg [offset + 2] * 0x80);
 				break;
 			case 0xF0:
 				synth.Sysex (new ArraySegment<byte> (msg, offset, length).ToArray (), null);
