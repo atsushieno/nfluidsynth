@@ -489,11 +489,7 @@ namespace NFluidsynth
 		public string LastError {
 			get {
 				var ptr = LibFluidsynth.Synth.fluid_synth_error (Handle);
-#if PORTABLE
-				return Marshal.PtrToStringAnsi (ptr);
-#else
 				return Marshal.PtrToStringAuto (ptr);
-#endif
 			}
 		}
 
