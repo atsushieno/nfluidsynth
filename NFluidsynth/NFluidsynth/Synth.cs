@@ -518,9 +518,9 @@ namespace NFluidsynth
 				OnError ("float sample write operation failed");
 		}
 
-		public void AddSoundFontLoader (IntPtr loader)
+		public void AddSoundFontLoader (SoundFontLoader loader)
 		{
-			LibFluidsynth.Synth.fluid_synth_add_sfloader (Handle, loader);
+			LibFluidsynth.Synth.fluid_synth_add_sfloader (Handle, loader.Handle);
 		}
 
 		public Voice AllocateVoice (IntPtr sample, int channel, int key, int vel)

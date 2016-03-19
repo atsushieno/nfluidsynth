@@ -14,7 +14,8 @@ namespace NFluidsynth.MidiManager
 		}
 		public FluidsynthMidiAccess (int ports)
 		{
-			Soundfonts = new List<string> ();
+			SoundFonts = new List<string> ();
+			SoundFontLoaderFactories = new List<Func<Synth,SoundFontLoader>> ();
 			foreach (var m in Enumerable.Range (1, ports + 1).Select (i => new FluidsynthMidiOutput (this, "id" + i)))
 				outputs.Add (m.Details.Id, m);
 		}
@@ -44,8 +45,9 @@ namespace NFluidsynth.MidiManager
 			return output.OpenAsync ().ContinueWith (t => (IMidiOutput) output);
 		}
 		
-		public IList<string> Soundfonts { get; private set; }
-		
+		public IList<string> SoundFonts { get; private set; }
+		public IList<Func<Synth,SoundFontLoader>> SoundFontLoaderFactories { get; private set; }
+
 		public Action<Settings> ConfigureSettings;
 
 		public event EventHandler<MidiConnectionEventArgs> StateChanged; // won't detect...
@@ -96,10 +98,6 @@ namespace NFluidsynth.MidiManager
 
 		FluidsynthMidiAccess midi_access;
 
-		public IList<string> Soundfonts {
-			get { return midi_access.Soundfonts; }
-		}
-
 		public Task CloseAsync ()
 		{
 			if (adriver != null)
@@ -135,7 +133,9 @@ namespace NFluidsynth.MidiManager
 				midi_access.ConfigureSettings (settings);
 			synth = new Synth (settings);
 			synth.HandleError = midi_access.HandleNativeError;
-			foreach (var sf in Soundfonts)
+			foreach (var factory in midi_access.SoundFontLoaderFactories)
+				synth.AddSoundFontLoader (factory (synth));
+			foreach (var sf in midi_access.SoundFonts)
 				synth.LoadSoundFont (sf, false);
 
 			adriver = new AudioDriver (synth.Settings, synth);
