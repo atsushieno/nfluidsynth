@@ -5,11 +5,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth.Tests", "NFluid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth.Sample", "NFluidsynth.Sample\NFluidsynth.Sample.csproj", "{578306D3-021B-437E-94E8-9A65FDCBC139}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons.Music.Midi", "external\managed-midi\lib\Commons.Music.Midi.csproj", "{D2FFA1EE-91DD-477D-8965-1E43CB0CBB69}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth", "NFluidsynth\NFluidsynth.csproj", "{79326AFF-EA30-479B-A48E-77CF5AB99EF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth.Desktop", "NFluidsynth\NFluidsynth.Desktop.csproj", "{79326AFF-EA30-479B-A48E-77CF5AB99EF4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth.MidiAccess", "NFluidsynth.MidiAccess\NFluidsynth.MidiAccess.csproj", "{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons.Music.Midi.Desktop", "external\managed-midi\Commons.Music.Midi.Desktop\Commons.Music.Midi.Desktop.csproj", "{59EEFB0D-3957-43FC-8272-C3B460F7FF84}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NFluidsynth.MidiAccess.Shared", "NFluidsynth.MidiAccess.Shared\NFluidsynth.MidiAccess.Shared.shproj", "{72F17E3C-B5C0-4E75-BBAD-B51FF560CCFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "alsa-sharp", "external\managed-midi\external\alsa-sharp\alsa-sharp\alsa-sharp.csproj", "{D8537EB3-C573-43D6-914A-455D6AC5AA11}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NFluidsynth.Shared", "NFluidsynth\NFluidsynth.Shared.shproj", "{58B63DC3-E6FF-4D08-8893-7E7ACA31AE88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +31,6 @@ Global
 		{E5DBFB0B-35A4-4351-A612-1AF1F7CD71F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5DBFB0B-35A4-4351-A612-1AF1F7CD71F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5DBFB0B-35A4-4351-A612-1AF1F7CD71F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2FFA1EE-91DD-477D-8965-1E43CB0CBB69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2FFA1EE-91DD-477D-8965-1E43CB0CBB69}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2FFA1EE-91DD-477D-8965-1E43CB0CBB69}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2FFA1EE-91DD-477D-8965-1E43CB0CBB69}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79326AFF-EA30-479B-A48E-77CF5AB99EF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{79326AFF-EA30-479B-A48E-77CF5AB99EF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79326AFF-EA30-479B-A48E-77CF5AB99EF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,6 +39,14 @@ Global
 		{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59EEFB0D-3957-43FC-8272-C3B460F7FF84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59EEFB0D-3957-43FC-8272-C3B460F7FF84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59EEFB0D-3957-43FC-8272-C3B460F7FF84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59EEFB0D-3957-43FC-8272-C3B460F7FF84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8537EB3-C573-43D6-914A-455D6AC5AA11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8537EB3-C573-43D6-914A-455D6AC5AA11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8537EB3-C573-43D6-914A-455D6AC5AA11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8537EB3-C573-43D6-914A-455D6AC5AA11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = NFluidsynth.Sample\NFluidsynth.Sample.csproj

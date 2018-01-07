@@ -33,27 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="NFluidsynth\AudioDriver.cs" />
-    <Compile Include="NFluidsynth\Enums.cs" />
-    <Compile Include="NFluidsynth\FileRenderer.cs" />
-    <Compile Include="NFluidsynth\FluidSynthInteropException.cs" />
-    <Compile Include="NFluidsynth\FluidsynthObject.cs" />
-    <Compile Include="NFluidsynth\MidiDriver.cs" />
-    <Compile Include="NFluidsynth\MidiEvent.cs" />
-    <Compile Include="NFluidsynth\MidiRouter.cs" />
-    <Compile Include="NFluidsynth\MidiRouterRule.cs" />
-    <Compile Include="NFluidsynth\Player.cs" />
-    <Compile Include="NFluidsynth\Settings.cs" />
-    <Compile Include="NFluidsynth\SoundFont.cs" />
-    <Compile Include="NFluidsynth\Synth.cs" />
-    <Compile Include="NFluidsynth\Voice.cs" />
-    <Compile Include="NFluidsynth.Native\LibFluidsynth.Audio.cs" />
-    <Compile Include="NFluidsynth.Native\LibFluidsynth.Midi.cs" />
-    <Compile Include="NFluidsynth.Native\LibFluidsynth.Misc.cs" />
-    <Compile Include="NFluidsynth.Native\LibFluidsynth.Settings.cs" />
-    <Compile Include="NFluidsynth.Native\LibFluidsynth.Synth.cs" />
-    <Compile Include="NFluidsynth.Native\LibFluidsynth.cs" />
-    <Compile Include="generator\ConfigurationKeys.cs" />
   </ItemGroup>
+  <Import Project="NFluidsynth.Shared.projitems" Label="Shared" Condition="Exists('NFluidsynth.Shared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

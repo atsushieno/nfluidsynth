@@ -34,11 +34,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\NFluidsynth\NFluidsynth.csproj">
+    <ProjectReference Include="..\NFluidsynth\NFluidsynth.Desktop.csproj">
       <Project>{79326AFF-EA30-479B-A48E-77CF5AB99EF4}</Project>
-      <Name>NFluidsynth</Name>
+      <Name>NFluidsynth.Desktop</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

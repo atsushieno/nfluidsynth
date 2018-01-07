@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{58B63DC3-E6FF-4D08-8893-7E7ACA31AE88}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>NFluidsynth.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)generator\ConfigurationKeys.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\AudioDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\Enums.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\FileRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\FluidSynthInteropException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\FluidsynthObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\MidiDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\MidiEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\MidiRouter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\MidiRouterRule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\Settings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\SoundFont.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\SoundFontLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\StreamLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\Synth.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\Voice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth.Native\LibFluidsynth.Audio.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth.Native\LibFluidsynth.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth.Native\LibFluidsynth.Midi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth.Native\LibFluidsynth.Misc.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth.Native\LibFluidsynth.Settings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth.Native\LibFluidsynth.Synth.cs" />
+  </ItemGroup>
+</Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using System.IO;
+using NFluidsynth;
 
 namespace NFluidsynth.Tests
 {

@@ -91,11 +91,6 @@ namespace NFluidsynth.MidiManager
 
 		public IMidiPortDetails Details { get; private set; }
 
-		public MidiPortDeviceState State { get; private set; }
-
-		// it won't change...
-		public event EventHandler StateChanged;
-
 		FluidsynthMidiAccess midi_access;
 
 		public Task CloseAsync ()
@@ -110,8 +105,6 @@ namespace NFluidsynth.MidiManager
 				settings.Dispose ();
 			settings = null;
 
-			State = MidiPortDeviceState.Disconnected;
-			
 			return Task.FromResult (true);
 		}
 
@@ -140,12 +133,10 @@ namespace NFluidsynth.MidiManager
 
 			adriver = new AudioDriver (synth.Settings, synth);
 
-			State = MidiPortDeviceState.Connected;
-
 			return Task.FromResult (true);
 		}
 
-		public Task SendAsync (byte [] msg, int offset, int length, long timestamp)
+		public void Send (byte [] msg, int offset, int length, long timestamp)
 		{
 			if (synth == null)
 				throw new InvalidOperationException ("The MIDI output is not open.");
@@ -180,7 +171,6 @@ namespace NFluidsynth.MidiManager
 				synth.Sysex (new ArraySegment<byte> (msg, offset, length).ToArray (), null);
 				break;
 			}
-			return completed_task;
 		}
 	}
 }

@@ -31,17 +31,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FluidsynthMidiAccess.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\external\managed-midi\lib\Commons.Music.Midi.csproj">
-      <Project>{D2FFA1EE-91DD-477D-8965-1E43CB0CBB69}</Project>
-      <Name>Commons.Music.Midi</Name>
+    <ProjectReference Include="..\external\managed-midi\Commons.Music.Midi.Desktop\Commons.Music.Midi.Desktop.csproj">
+      <Project>{59EEFB0D-3957-43FC-8272-C3B460F7FF84}</Project>
+      <Name>Commons.Music.Midi.Desktop</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NFluidsynth\NFluidsynth.csproj">
+    <ProjectReference Include="..\NFluidsynth\NFluidsynth.Desktop.csproj">
       <Project>{79326AFF-EA30-479B-A48E-77CF5AB99EF4}</Project>
-      <Name>NFluidsynth</Name>
+      <Name>NFluidsynth.Desktop</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\NFluidsynth.MidiAccess.Shared\NFluidsynth.MidiAccess.Shared.projitems" Label="Shared" Condition="Exists('..\NFluidsynth.MidiAccess.Shared\NFluidsynth.MidiAccess.Shared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

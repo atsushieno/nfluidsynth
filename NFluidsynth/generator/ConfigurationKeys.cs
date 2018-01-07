@@ -40,9 +40,9 @@ namespace NFluidsynth
 		public const string AudioJackMulti = "audio.jack.multi";
 		public const string AudioJackServer = "audio.jack.server";
 		public const string AudioOssDevice = "audio.oss.device";
-		public const string AudioPortaudioDevice = "audio.portaudio.device";
-		public const string AudioPulseaudioDevice = "audio.pulseaudio.device";
-		public const string AudioPulseaudioServer = "audio.pulseaudio.server";
+		public const string AudioPortAudioDevice = "audio.portaudio.device";
+		public const string AudioPulseAudioDevice = "audio.pulseaudio.device";
+		public const string AudioPulseAudioServer = "audio.pulseaudio.server";
 		public const string MidiDriver = "midi.driver";
 		public const string MidiRealTimePriority = "midi.realtime-prio";
 		public const string MidiAlsaDevice = "midi.alsa.device";
