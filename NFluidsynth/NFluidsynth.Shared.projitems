@@ -23,7 +23,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\SoundFont.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\SoundFontLoader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\StreamLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\Synth.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\Voice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth.Native\LibFluidsynth.Audio.cs" />
@@ -32,5 +31,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth.Native\LibFluidsynth.Misc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth.Native\LibFluidsynth.Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth.Native\LibFluidsynth.Synth.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth.Native\LibFluidsynth.SfLoader.cs" />
   </ItemGroup>
 </Project>
