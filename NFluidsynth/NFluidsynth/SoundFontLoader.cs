@@ -1,60 +1,70 @@
 ﻿using System;
+using System.IO;
 using NFluidsynth.Native;
 using static NFluidsynth.Native.LibFluidsynth;
 
 namespace NFluidsynth
 {
-	public abstract class SoundFontLoader : IDisposable
+	public delegate SoundFont SoundFontLoaderLoadDelegate (SoundFontLoader loader, string filename);
+	public delegate SoundFont SoundFontLoaderFreeDelegate (SoundFontLoader loader);
+
+	public abstract class SoundFontLoaderCallbacks
 	{
-		public SoundFontLoader (Synth synth)
+		// used as fluid_sfloader_callback_open_t
+		public abstract IntPtr Open (string filename);
+		// used as fluid_sfloader_callback_read_t
+		public abstract int Read (IntPtr buf, long count, IntPtr sfHandle);
+		// used as fluid_sfloader_callback_seek_t
+		public abstract int Seek (IntPtr sfHandle, int offset, SeekOrigin origin);
+		// used as fluid_sfloader_callback_tell_t
+		public abstract int Tell (IntPtr sfHandle);
+		// used as fluid_sfloader_callback_close_t
+		public abstract int Close (IntPtr sfHandle);
+	}
+
+	public class SoundFontLoader : IDisposable
+	{
+		IntPtr handle; // fluid_sfloader_t*
+
+		public static SoundFontLoader NewDefaultSoundFontLoader (Settings settings)
 		{
-			i = new SoundFontLoaderInternal (synth, (p, f) => Load (f), p => Free ());
+			return new SoundFontLoader (SfLoader.new_fluid_defsfloader (settings.Handle));
 		}
 
-		SoundFontLoaderInternal i;
+		public SoundFontLoader (SoundFontLoaderLoadDelegate load, SoundFontLoaderFreeDelegate free)
+			: this (SfLoader.new_fluid_sfloader ((loaderHandle, filename) => load (new SoundFontLoader (loaderHandle), filename).Handle, (loaderHandle) => free (new SoundFontLoader (loaderHandle))))
+		{
+		}
+
+		protected SoundFontLoader (IntPtr handle)
+		{
+			this.handle = handle;
+		}
+
+		protected void SetCallbacks (SoundFontLoaderCallbacks callbacks)
+		{
+			SfLoader.fluid_sfloader_set_callbacks (handle,
+			                                       f => callbacks.Open (f),
+			                                       (b, l, h) => callbacks.Read (b, l, h), 
+			                                       (h, p, i) => callbacks.Seek (h, p, (SeekOrigin) i),
+			                                       h => callbacks.Tell (h),
+			                                       h => callbacks.Close (h));
+		}
 
 		public void Dispose ()
 		{
-			if (i != null)
-				i.Dispose ();
-			i = null;
+			if (handle != IntPtr.Zero)
+				SfLoader.delete_fluid_sfloader (handle);
+			handle = IntPtr.Zero;
 		}
 
 		internal IntPtr Handle {
-			get { return i.Handle; }
+			get { return handle; }
 		}
 
-		public abstract IntPtr Load (string filename);
-
-		public abstract void Free ();
-
-		public abstract IntPtr Open (string filename);
-		public abstract int Read (IntPtr buf, long count, IntPtr handle);
-		public abstract int Seek (IntPtr handle, long position, int origin); // I avoid System.IO-specific enum here.
-		public abstract int Tell (IntPtr handle);
-		public abstract int Close (IntPtr handle);
-	}
-	
-	class SoundFontLoaderInternal : FluidsynthObject
-	{
-		public SoundFontLoaderInternal (Synth synth, SfLoader.fluid_sfloader_load_t load, SfLoader.fluid_sfloader_free_t free)
-			: base (SfLoader.new_fluid_sfloader (load, free), true)
-		{
-		}
-
-		public SoundFontLoaderInternal (IntPtr handle)
-			: base (handle, false)
-		{
-		}
-
-		protected override void OnDispose ()
-		{
-			SfLoader.delete_fluid_sfloader (Handle);
-		}
-
-		public void SetCallbacks (SoundFontLoader loader)
-		{
-			SfLoader.fluid_sfloader_set_callbacks (Handle, loader.Open, (b, l, p) => loader.Read (b, l, p), (p, i, o) => loader.Seek (p, i, o), p => loader.Tell (p), p => loader.Close (p));
+		public IntPtr Data {
+			get { return SfLoader.fluid_sfloader_get_data (handle); }
+			set { SfLoader.fluid_sfloader_set_data (handle, value); }
 		}
 	}
 }

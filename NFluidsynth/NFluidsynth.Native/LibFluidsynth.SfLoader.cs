@@ -21,17 +21,20 @@ namespace NFluidsynth.Native
 			internal static extern fluid_sfloader_t_ptr new_fluid_sfloader (fluid_sfloader_load_t load, fluid_sfloader_free_t free);
 
 			[DllImport (LibraryName)]
+			internal static extern fluid_sfloader_t_ptr new_fluid_defsfloader (IntPtr settings);
+
+			[DllImport (LibraryName)]
 			internal static extern void delete_fluid_sfloader (fluid_sfloader_t_ptr loader);
 
 			internal delegate IntPtr fluid_sfloader_callback_open_t (string filename);
 
 			internal delegate int fluid_sfloader_callback_read_t (IntPtr buf, int count, IntPtr handle);
 
-			internal delegate int fluid_sfloader_callback_seek_t (IntPtr handle, long offset, int origin);
+			internal delegate int fluid_sfloader_callback_seek_t (IntPtr handle, int offset, int origin);
 
 			internal delegate int fluid_sfloader_callback_close_t (IntPtr handle);
 
-			internal delegate long fluid_sfloader_callback_tell_t (IntPtr handle);
+			internal delegate int fluid_sfloader_callback_tell_t (IntPtr handle);
 
 			[DllImport (LibraryName)]
 			internal static extern int fluid_sfloader_set_callbacks (fluid_sfloader_t_ptr loader,
@@ -100,7 +103,7 @@ namespace NFluidsynth.Native
 			[DllImport (LibraryName)]
 			internal static extern  void delete_fluid_sample (fluid_sample_t_ptr sample);
 			[DllImport (LibraryName)]
-			internal static extern  /*size_t*/long fluid_sample_sizeof ();
+			internal static extern  /*size_t*/int fluid_sample_sizeof ();
 
 			[DllImport (LibraryName)]
 			internal static extern  int fluid_sample_set_name (fluid_sample_t_ptr sample, string name);
