@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using NFluidsynth.Native;
 using static NFluidsynth.Native.LibFluidsynth;
 
@@ -14,8 +15,10 @@ namespace NFluidsynth
 		public abstract IntPtr Open (string filename);
 		// used as fluid_sfloader_callback_read_t
 		public abstract int Read (IntPtr buf, long count, IntPtr sfHandle);
+		public int Read (IntPtr buf, int count, IntPtr sfHandle) => Read (buf, (long) count, sfHandle);
 		// used as fluid_sfloader_callback_seek_t
 		public abstract int Seek (IntPtr sfHandle, int offset, SeekOrigin origin);
+		public int Seek (IntPtr sfHandle, int offset, int origin) => Seek (sfHandle, offset, (SeekOrigin) origin);
 		// used as fluid_sfloader_callback_tell_t
 		public abstract int Tell (IntPtr sfHandle);
 		// used as fluid_sfloader_callback_close_t
@@ -41,18 +44,23 @@ namespace NFluidsynth
 			this.handle = handle;
 		}
 
+		GCHandle callbacks_handle;
+
 		protected void SetCallbacks (SoundFontLoaderCallbacks callbacks)
 		{
+			callbacks_handle = GCHandle.Alloc (callbacks);
 			SfLoader.fluid_sfloader_set_callbacks (handle,
-			                                       f => callbacks.Open (f),
-			                                       (b, l, h) => callbacks.Read (b, l, h), 
-			                                       (h, p, i) => callbacks.Seek (h, p, (SeekOrigin) i),
-			                                       h => callbacks.Tell (h),
-			                                       h => callbacks.Close (h));
+			                                       callbacks.Open,
+			                                       callbacks.Read, 
+			                                       callbacks.Seek,
+			                                       callbacks.Tell,
+			                                       callbacks.Close);
 		}
 
-		public void Dispose ()
+		public virtual void Dispose ()
 		{
+			if (callbacks_handle.IsAllocated)
+				callbacks_handle.Free ();
 			if (handle != IntPtr.Zero)
 				SfLoader.delete_fluid_sfloader (handle);
 			handle = IntPtr.Zero;
