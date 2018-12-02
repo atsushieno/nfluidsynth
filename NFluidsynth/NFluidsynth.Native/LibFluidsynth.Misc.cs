@@ -14,6 +14,9 @@ namespace NFluidsynth.Native
 			[DllImport (LibraryName)]
 			[return:MarshalAs (UnmanagedType.SysInt)]
 			internal extern static bool fluid_is_midifile (string filename);
+			
+			[DllImport (LibraryName)]
+			internal extern static IntPtr fluid_set_log_function (int severity, Logger.LoggerDelegate func, IntPtr data);
 		}
 	}
 }

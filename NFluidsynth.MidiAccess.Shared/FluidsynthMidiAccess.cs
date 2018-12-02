@@ -14,6 +14,8 @@ namespace NFluidsynth.MidiManager
 		}
 		public FluidsynthMidiAccess (int ports)
 		{
+			Logger.SetLoggerMethod (ConsoleLogger.LogMessage);
+			
 			SoundFonts = new List<string> ();
 			SoundFontLoaderFactories = new List<Func<Synth,SoundFontLoader>> ();
 			foreach (var m in Enumerable.Range (1, ports + 1).Select (i => new FluidsynthMidiOutput (this, "id" + i)))

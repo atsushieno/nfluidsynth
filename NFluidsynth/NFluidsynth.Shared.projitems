@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\FileRenderer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\FluidSynthInteropException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\FluidsynthObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\Logger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\MidiDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\MidiEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NFluidsynth\MidiRouter.cs" />
