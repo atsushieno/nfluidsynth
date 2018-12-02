@@ -49,6 +49,8 @@ namespace NFluidsynth.Native
 			[DllImport (LibraryName)]
 			[return:MarshalAs (UnmanagedType.SysInt)] internal static extern int 	fluid_synth_channel_pressure (fluid_synth_t_ptr synth, [MarshalAs (UnmanagedType.SysInt)] int chan, [MarshalAs (UnmanagedType.SysInt)] int val);
 			[DllImport (LibraryName)]
+			[return:MarshalAs (UnmanagedType.SysInt)] internal static extern int 	fluid_synth_key_pressure (fluid_synth_t_ptr synth, [MarshalAs (UnmanagedType.SysInt)] int chan, [MarshalAs (UnmanagedType.SysInt)] int key, [MarshalAs (UnmanagedType.SysInt)] int val);
+			[DllImport (LibraryName)]
 			[return:MarshalAs (UnmanagedType.SysInt)] internal static extern int 	fluid_synth_bank_select (fluid_synth_t_ptr synth, [MarshalAs (UnmanagedType.SysInt)] int chan, [MarshalAs (UnmanagedType.SysUInt)] uint bank);
 			[DllImport (LibraryName)]
 			[return:MarshalAs (UnmanagedType.SysInt)] internal static extern int 	fluid_synth_sfont_select (fluid_synth_t_ptr synth, [MarshalAs (UnmanagedType.SysInt)] int chan, [MarshalAs (UnmanagedType.SysUInt)] uint sfont_id);

@@ -155,7 +155,7 @@ namespace NFluidsynth.MidiManager
 					synth.NoteOn (ch, msg [offset + 1], msg [offset + 2]);
 				break;
 			case 0xA0:
-				// No PAf in fluidsynth?
+				synth.KeyPressure (ch, msg [offset + 1], msg [offset + 2]);
 				break;
 			case 0xB0:
 				synth.CC (ch, msg [offset + 1], msg [offset + 2]);
