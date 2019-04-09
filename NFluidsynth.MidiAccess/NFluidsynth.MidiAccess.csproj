@@ -41,10 +41,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\external\managed-midi\Commons.Music.Midi.Desktop\Commons.Music.Midi.Desktop.csproj">
-      <Project>{59EEFB0D-3957-43FC-8272-C3B460F7FF84}</Project>
-      <Name>Commons.Music.Midi.Desktop</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NFluidsynth\NFluidsynth.Desktop.csproj">
       <Project>{79326AFF-EA30-479B-A48E-77CF5AB99EF4}</Project>
       <Name>NFluidsynth.Desktop</Name>

@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/atsushieno/nfluidsynth</projectUrl>
     <summary>see github commits, there is not a lot of changes.</summary>
     <dependencies>
-      <dependency id="managed-midi" version="1.7" />
+      <dependency id="managed-midi" version="1.9" />
     </dependencies>
   </metadata>
   <files>
