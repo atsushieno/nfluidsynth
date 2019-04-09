@@ -141,6 +141,12 @@ namespace NFluidsynth
 				OnError ("channel pressure change operation failed");
 		}
 
+		public void KeyPressure (int channel, int key, int val)
+		{
+			if (LibFluidsynth.Synth.fluid_synth_key_pressure (Handle, channel, key, val) != 0)
+				OnError ("key pressure change operation failed");
+		}
+
 		public void BankSelect (int channel, uint bank)
 		{
 			if (LibFluidsynth.Synth.fluid_synth_bank_select (Handle, channel, bank) != 0)

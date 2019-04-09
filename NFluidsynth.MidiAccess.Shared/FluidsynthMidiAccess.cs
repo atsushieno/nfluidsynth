@@ -14,6 +14,8 @@ namespace NFluidsynth.MidiManager
 		}
 		public FluidsynthMidiAccess (int ports)
 		{
+			Logger.SetLoggerMethod (ConsoleLogger.LogMessage);
+			
 			SoundFonts = new List<string> ();
 			SoundFontLoaderFactories = new List<Func<Synth,SoundFontLoader>> ();
 			foreach (var m in Enumerable.Range (1, ports + 1).Select (i => new FluidsynthMidiOutput (this, "id" + i)))
@@ -153,7 +155,7 @@ namespace NFluidsynth.MidiManager
 					synth.NoteOn (ch, msg [offset + 1], msg [offset + 2]);
 				break;
 			case 0xA0:
-				// No PAf in fluidsynth?
+				synth.KeyPressure (ch, msg [offset + 1], msg [offset + 2]);
 				break;
 			case 0xB0:
 				synth.CC (ch, msg [offset + 1], msg [offset + 2]);
