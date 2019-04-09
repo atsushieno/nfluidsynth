@@ -3,3 +3,6 @@ obj
 packages
 NFluidsynth.userprefs
 .vs
+.idea
+*.DotSettings.user
+

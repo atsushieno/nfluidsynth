@@ -1,0 +1,21 @@
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>nfluidsynth</id>
+    <version>0.1</version>
+    <description>libfluidsynth C# binding</description>
+    <authors>atsushieno</authors>
+    <owners>atsushieno</owners>
+    <licenseUrl>https://github.com/atsushieno/nfluidsynth/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/atsushieno/nfluidsynth</projectUrl>
+    <summary>see github commits, there is not a lot of changes.</summary>
+    <dependencies>
+      <dependency id="managed-midi" version="1.7" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="NFluidsynth.MidiAccess\bin\Debug\NFluidsynth.dll" target="lib\net40" />
+    <file src="NFluidsynth.MidiAccess\bin\Debug\NFluidsynth.pdb" target="lib\net40" />
+    <file src="NFluidsynth.MidiAccess\bin\Debug\NFluidsynth.MidiAccess.dll" target="lib\net40" />
+    <file src="NFluidsynth.MidiAccess\bin\Debug\NFluidsynth.MidiAccess.pdb" target="lib\net40" />
+  </files>
+</package>
