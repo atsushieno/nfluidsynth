@@ -5,13 +5,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth.Tests", "NFluid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth.Sample", "NFluidsynth.Sample\NFluidsynth.Sample.csproj", "{578306D3-021B-437E-94E8-9A65FDCBC139}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth.Desktop", "NFluidsynth\NFluidsynth.Desktop.csproj", "{79326AFF-EA30-479B-A48E-77CF5AB99EF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth", "NFluidsynth\NFluidsynth.csproj", "{79326AFF-EA30-479B-A48E-77CF5AB99EF4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFluidsynth.MidiAccess", "NFluidsynth.MidiAccess\NFluidsynth.MidiAccess.csproj", "{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NFluidsynth.MidiAccess.Shared", "NFluidsynth.MidiAccess.Shared\NFluidsynth.MidiAccess.Shared.shproj", "{72F17E3C-B5C0-4E75-BBAD-B51FF560CCFD}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NFluidsynth.Shared", "NFluidsynth\NFluidsynth.Shared.shproj", "{58B63DC3-E6FF-4D08-8893-7E7ACA31AE88}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Generator.csproj", "{88515D61-D3DD-4D16-A6C0-23802B8CC089}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +33,10 @@ Global
 		{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C0A7DD2-6F9A-457A-A70C-7BF23E5E6D2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88515D61-D3DD-4D16-A6C0-23802B8CC089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88515D61-D3DD-4D16-A6C0-23802B8CC089}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88515D61-D3DD-4D16-A6C0-23802B8CC089}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88515D61-D3DD-4D16-A6C0-23802B8CC089}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = NFluidsynth.Sample\NFluidsynth.Sample.csproj
