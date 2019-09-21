@@ -104,7 +104,7 @@ namespace NFluidsynth.Native
         internal static extern void delete_fluid_sample(fluid_sample_t_ptr sample);
 
         [DllImport(LibraryName)]
-        internal static extern /*size_t*/ int fluid_sample_sizeof();
+        internal static extern IntPtr fluid_sample_sizeof();
 
         [DllImport(LibraryName)]
         internal static extern int fluid_sample_set_name(fluid_sample_t_ptr sample, string name);

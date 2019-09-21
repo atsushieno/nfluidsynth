@@ -7,6 +7,9 @@ namespace NFluidsynth.Native
     {
         public const string LibraryName = "fluidsynth.dll";
 
+        public const int FluidOk = 0;
+        public const int FluidFailed = -1;
+
 #if NETCOREAPP
         static LibFluidsynth()
         {

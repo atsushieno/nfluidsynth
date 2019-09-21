@@ -18,7 +18,7 @@ namespace NFluidsynth
 	}
 
 	public enum FluidTypes
-	{
+    {
 		NoType = -1,
 		NumericType,
 		IntegerType,

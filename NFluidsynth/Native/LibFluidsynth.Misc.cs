@@ -6,11 +6,11 @@ namespace NFluidsynth.Native
     internal static partial class LibFluidsynth
     {
         [DllImport(LibraryName)]
-        [return: MarshalAs(UnmanagedType.SysInt)]
+        [return: MarshalAs(UnmanagedType.I4)]
         internal static extern bool fluid_is_soundfont(string filename);
 
         [DllImport(LibraryName)]
-        [return: MarshalAs(UnmanagedType.SysInt)]
+        [return: MarshalAs(UnmanagedType.I4)]
         internal static extern bool fluid_is_midifile(string filename);
 
         [DllImport(LibraryName)]

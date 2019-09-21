@@ -1,44 +1,55 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace NFluidsynth
 {
-	public abstract class FluidsynthObject : IDisposable
-	{
-		IntPtr handle;
-		bool dispose_required;
+    public abstract class FluidsynthObject : IDisposable
+    {
+        private readonly bool _disposeRequired;
 
-		protected FluidsynthObject (IntPtr handle, bool disposeRequired)
-		{
-			this.handle = handle;
-			dispose_required = disposeRequired;
-		}
+        protected FluidsynthObject(IntPtr handle, bool disposeRequired)
+        {
+            Handle = handle;
+            _disposeRequired = disposeRequired;
+        }
 
-		internal IntPtr Handle {
-			get { return handle; }
-		}
+        public bool Disposed { get; private set; }
+        internal IntPtr Handle { get; }
 
-		protected abstract void OnDispose ();
+        protected abstract void OnDispose();
 
-		public void Dispose ()
-		{
-			if (dispose_required)
-				OnDispose ();
-		}
+        public void Dispose()
+        {
+            if (_disposeRequired)
+            {
+                OnDispose();
+            }
 
-		public override int GetHashCode ()
-		{
-			return (int) handle;
-		}
+            Disposed = true;
+        }
 
-		public override bool Equals (object obj)
-		{
-			return Equals (obj as FluidsynthObject);
-		}
+        public override int GetHashCode()
+        {
+            return (int) Handle;
+        }
 
-		protected virtual bool Equals (FluidsynthObject obj)
-		{
-			return (object) obj != null && handle == obj.handle;
-		}
-	}
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as FluidsynthObject);
+        }
+
+        protected virtual bool Equals(FluidsynthObject obj)
+        {
+            return obj != null && Handle == obj.Handle;
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        internal void ThrowIfDisposed()
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(nameof(FluidsynthObject));
+            }
+        }
+    }
 }
-
