@@ -6,7 +6,7 @@ namespace NFluidsynth
 	public class MidiDriver : FluidsynthObject
 	{
 		public MidiDriver (Settings settings, MidiEventHandler handler, byte [] handlerData)
-			: base (LibFluidsynth.Midi.new_fluid_midi_driver (settings.Handle, (d, e) => handler (d, new MidiEvent (e)), handlerData), true)
+			: base (LibFluidsynth.new_fluid_midi_driver (settings.Handle, (d, e) => handler (d, new MidiEvent (e)), handlerData), true)
 		{
 		}
 
@@ -17,7 +17,7 @@ namespace NFluidsynth
 
 		protected override void OnDispose ()
 		{
-			LibFluidsynth.Midi.delete_fluid_midi_driver (Handle);
+			LibFluidsynth.delete_fluid_midi_driver (Handle);
 		}
 	}
 }

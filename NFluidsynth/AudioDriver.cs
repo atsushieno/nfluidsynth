@@ -10,12 +10,12 @@ namespace NFluidsynth
 		public delegate int AudioHandler (byte [] data, float [][] outBuffer);
 
 		public AudioDriver (Settings settings, Synth synth)
-			: base (LibFluidsynth.Audio.new_fluid_audio_driver (settings.Handle, synth.Handle), true)
+			: base (LibFluidsynth.new_fluid_audio_driver (settings.Handle, synth.Handle), true)
 		{
 		}
 
 		public AudioDriver (Settings settings, AudioHandler handler, byte[] data)
-			: base (LibFluidsynth.Audio.new_fluid_audio_driver2 (settings.Handle, (dt, len, nin, inBuffer, nout, outBuffer) => {
+			: base (LibFluidsynth.new_fluid_audio_driver2 (settings.Handle, (dt, len, nin, inBuffer, nout, outBuffer) => {
 				try {
 					var bufPtrs = new IntPtr [nout];
 					Marshal.Copy (outBuffer, bufPtrs, 0, nout);
@@ -33,7 +33,7 @@ namespace NFluidsynth
 
 		protected override void OnDispose ()
 		{
-			LibFluidsynth.Audio.delete_fluid_audio_driver (Handle);
+			LibFluidsynth.delete_fluid_audio_driver (Handle);
 		}
 	}
 }

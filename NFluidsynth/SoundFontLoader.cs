@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using NFluidsynth.Native;
 using static NFluidsynth.Native.LibFluidsynth;
 
 namespace NFluidsynth
@@ -31,11 +30,11 @@ namespace NFluidsynth
 
 		public static SoundFontLoader NewDefaultSoundFontLoader (Settings settings)
 		{
-			return new SoundFontLoader (SfLoader.new_fluid_defsfloader (settings.Handle));
+			return new SoundFontLoader ( new_fluid_defsfloader (settings.Handle));
 		}
 
 		public SoundFontLoader (SoundFontLoaderLoadDelegate load, SoundFontLoaderFreeDelegate free)
-			: this (SfLoader.new_fluid_sfloader ((loaderHandle, filename) => load (new SoundFontLoader (loaderHandle), filename).Handle, (loaderHandle) => free (new SoundFontLoader (loaderHandle))))
+			: this ( new_fluid_sfloader ((loaderHandle, filename) => load (new SoundFontLoader (loaderHandle), filename).Handle, (loaderHandle) => free (new SoundFontLoader (loaderHandle))))
 		{
 		}
 
@@ -49,9 +48,9 @@ namespace NFluidsynth
 		protected void SetCallbacks (SoundFontLoaderCallbacks callbacks)
 		{
 			callbacks_handle = GCHandle.Alloc (callbacks);
-			SfLoader.fluid_sfloader_set_callbacks (handle,
+			 fluid_sfloader_set_callbacks (handle,
 			                                       callbacks.Open,
-			                                       callbacks.Read, 
+			                                       callbacks.Read,
 			                                       callbacks.Seek,
 			                                       callbacks.Tell,
 			                                       callbacks.Close);
@@ -62,7 +61,7 @@ namespace NFluidsynth
 			if (callbacks_handle.IsAllocated)
 				callbacks_handle.Free ();
 			if (handle != IntPtr.Zero)
-				SfLoader.delete_fluid_sfloader (handle);
+				 delete_fluid_sfloader (handle);
 			handle = IntPtr.Zero;
 		}
 
@@ -71,8 +70,8 @@ namespace NFluidsynth
 		}
 
 		public IntPtr Data {
-			get { return SfLoader.fluid_sfloader_get_data (handle); }
-			set { SfLoader.fluid_sfloader_set_data (handle, value); }
+			get { return  fluid_sfloader_get_data (handle); }
+			set {  fluid_sfloader_set_data (handle, value); }
 		}
 	}
 }

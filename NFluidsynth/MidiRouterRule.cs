@@ -6,7 +6,7 @@ namespace NFluidsynth
 	public class MidiRouterRule : FluidsynthObject
 	{
 		public MidiRouterRule ()
-			: base (LibFluidsynth.Midi.new_fluid_midi_router_rule (), true)
+			: base (LibFluidsynth.new_fluid_midi_router_rule (), true)
 		{
 		}
 
@@ -17,22 +17,22 @@ namespace NFluidsynth
 
 		protected override void OnDispose ()
 		{
-			LibFluidsynth.Midi.delete_fluid_midi_router_rule (Handle);
+			LibFluidsynth.delete_fluid_midi_router_rule (Handle);
 		}
 
 		public void SetChannel (int min, int max, float mul, int add)
 		{
-			LibFluidsynth.Midi.fluid_midi_router_rule_set_chan (Handle, min, max, mul, add);
+			LibFluidsynth.fluid_midi_router_rule_set_chan (Handle, min, max, mul, add);
 		}
 
 		public void SetParam1 (int min, int max, float mul, int add)
 		{
-			LibFluidsynth.Midi.fluid_midi_router_rule_set_param1 (Handle, min, max, mul, add);
+			LibFluidsynth.fluid_midi_router_rule_set_param1 (Handle, min, max, mul, add);
 		}
 
 		public void SetParam2 (int min, int max, float mul, int add)
 		{
-			LibFluidsynth.Midi.fluid_midi_router_rule_set_param2 (Handle, min, max, mul, add);
+			LibFluidsynth.fluid_midi_router_rule_set_param2 (Handle, min, max, mul, add);
 		}
 	}
 

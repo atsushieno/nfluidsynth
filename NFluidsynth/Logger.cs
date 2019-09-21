@@ -25,11 +25,11 @@ namespace NFluidsynth
 		
 		public static void SetLoggerMethod (LoggerDelegate method)
 		{
-			LibFluidsynth.Misc.fluid_set_log_function ((int) LogLevel.Panic, method, IntPtr.Zero);
-			LibFluidsynth.Misc.fluid_set_log_function ((int) LogLevel.Error, method, IntPtr.Zero);
-			LibFluidsynth.Misc.fluid_set_log_function ((int) LogLevel.Warning, method, IntPtr.Zero);
-			LibFluidsynth.Misc.fluid_set_log_function ((int) LogLevel.Information, method, IntPtr.Zero);
-			LibFluidsynth.Misc.fluid_set_log_function ((int) LogLevel.Debug, method, IntPtr.Zero);
+			LibFluidsynth.fluid_set_log_function ((int) LogLevel.Panic, method, IntPtr.Zero);
+			LibFluidsynth.fluid_set_log_function ((int) LogLevel.Error, method, IntPtr.Zero);
+			LibFluidsynth.fluid_set_log_function ((int) LogLevel.Warning, method, IntPtr.Zero);
+			LibFluidsynth.fluid_set_log_function ((int) LogLevel.Information, method, IntPtr.Zero);
+			LibFluidsynth.fluid_set_log_function ((int) LogLevel.Debug, method, IntPtr.Zero);
 		}
 		
 	}
