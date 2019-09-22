@@ -33,14 +33,19 @@ namespace NFluidsynth
         }
 
         public Synth(Settings settings)
-            : base(LibFluidsynth.new_fluid_synth(settings.Handle), true)
+            : base(LibFluidsynth.new_fluid_synth(settings.Handle))
         {
             Settings = settings;
         }
 
-        protected override void OnDispose()
+        protected override void Dispose(bool disposing)
         {
-            LibFluidsynth.delete_fluid_synth(Handle);
+            if (!Disposed)
+            {
+                LibFluidsynth.delete_fluid_synth(Handle);
+            }
+
+            base.Dispose(disposing);
         }
 
         public Settings Settings { get; }
@@ -503,7 +508,7 @@ namespace NFluidsynth
         {
             var ret = new double[128];
             var nm = new byte[64];
-            
+
             fixed (double* rPtr = ret)
             fixed (byte* nPtr = nm)
             {

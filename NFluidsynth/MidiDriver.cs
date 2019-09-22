@@ -4,26 +4,29 @@ namespace NFluidsynth
 {
     public class MidiDriver : FluidsynthObject
     {
+        // Keep these around to prevent the GC eating them.
         private readonly handle_midi_event_func_t _handler;
+        private readonly Settings _settings;
 
         public unsafe MidiDriver(Settings settings, MidiEventHandler handler)
             : base(new_fluid_midi_driver(
-                    settings.Handle,
-                    Pass((d, e) => handler(new MidiEvent(e)), out var b), null),
-                true)
+                settings.Handle,
+                Utility.PassDelegatePointer<handle_midi_event_func_t>(
+                    (d, e) => handler(new MidiEvent(e)), out var b),
+                null))
         {
             _handler = b;
+            _settings = settings;
         }
 
-        protected override void OnDispose()
+        protected override void Dispose(bool disposing)
         {
-            delete_fluid_midi_driver(Handle);
-        }
+            if (!Disposed)
+            {
+                delete_fluid_midi_driver(Handle);
+            }
 
-        private static handle_midi_event_func_t Pass(handle_midi_event_func_t a, out handle_midi_event_func_t b)
-        {
-            b = a;
-            return b;
+            base.Dispose(disposing);
         }
     }
 }

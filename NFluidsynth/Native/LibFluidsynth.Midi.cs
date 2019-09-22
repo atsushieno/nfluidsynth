@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using fluid_midi_event_t_ptr = System.IntPtr;
 using fluid_midi_router_t_ptr = System.IntPtr;
 using fluid_player_t_ptr = System.IntPtr;
@@ -128,7 +129,7 @@ namespace NFluidsynth.Native
 
         [DllImport(LibraryName)]
         internal static extern fluid_midi_driver_t_ptr new_fluid_midi_driver(fluid_settings_t_ptr settings,
-            handle_midi_event_func_t handler, void* event_handler_data);
+            IntPtr handler, void* event_handler_data);
 
         [DllImport(LibraryName)]
         internal static extern void delete_fluid_midi_driver(fluid_midi_driver_t_ptr driver);

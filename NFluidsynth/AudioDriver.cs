@@ -9,13 +9,18 @@ namespace NFluidsynth
         public delegate int AudioHandler(float[][] outBuffer);
 
         public AudioDriver(Settings settings, Synth synth)
-            : base(LibFluidsynth.new_fluid_audio_driver(settings.Handle, synth.Handle), true)
+            : base(LibFluidsynth.new_fluid_audio_driver(settings.Handle, synth.Handle))
         {
         }
 
-        protected override void OnDispose()
+        protected override void Dispose(bool disposing)
         {
-            LibFluidsynth.delete_fluid_audio_driver(Handle);
+            if (!Disposed)
+            {
+                LibFluidsynth.delete_fluid_audio_driver(Handle);
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

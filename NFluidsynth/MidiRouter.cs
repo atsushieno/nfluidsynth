@@ -8,14 +8,18 @@ namespace NFluidsynth
     public class MidiRouter : FluidsynthObject
     {
         public unsafe MidiRouter(Settings settings, MidiEventHandler handler)
-            : base(LibFluidsynth.new_fluid_midi_router(settings.Handle, (d, e) => handler(new MidiEvent(e)), null),
-                true)
+            : base(LibFluidsynth.new_fluid_midi_router(settings.Handle, (d, e) => handler(new MidiEvent(e)), null))
         {
         }
 
-        protected override void OnDispose()
+        protected override void Dispose(bool disposed)
         {
-            LibFluidsynth.delete_fluid_midi_router(Handle);
+            if (!Disposed)
+            {
+                LibFluidsynth.delete_fluid_midi_router(Handle);
+            }
+
+            base.Dispose(disposed);
         }
 
         public void SetDefaultRules()

@@ -3,16 +3,21 @@ using NFluidsynth.Native;
 
 namespace NFluidsynth
 {
-    public sealed class Settings : FluidsynthObject
+    public class Settings : FluidsynthObject
     {
         public Settings()
-            : base(LibFluidsynth.new_fluid_settings(), true)
+            : base(LibFluidsynth.new_fluid_settings())
         {
         }
 
-        protected override void OnDispose()
+        protected override void Dispose(bool disposing)
         {
-            LibFluidsynth.delete_fluid_settings(Handle);
+            if (!Disposed)
+            {
+                LibFluidsynth.delete_fluid_settings(Handle);
+            }
+
+            base.Dispose(disposing);
         }
 
         public SettingEntry this[string name] => new SettingEntry(this, name);

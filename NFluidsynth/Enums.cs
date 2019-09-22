@@ -2,64 +2,63 @@
 
 namespace NFluidsynth
 {
-	// settings.h
+    // settings.h
 
-	[Flags]
-	public enum FluidHint
-	{
-		BoundedBelow = 1,
-		BoundedAbove = 2,
-		Toggled = 4,
-		SampleRate = 8,
-		Logarithmic = 0x10,
-		Integer = 0x20,
-		FileName = 1,
-		OptionList = 2,
-	}
-
-	public enum FluidTypes
+    [Flags]
+    public enum FluidHint
     {
-		NoType = -1,
-		NumericType,
-		IntegerType,
-		StringType,
-		SetType,
-	}
+        BoundedBelow = 1,
+        BoundedAbove = 2,
+        Toggled = 4,
+        SampleRate = 8,
+        Logarithmic = 0x10,
+        Integer = 0x20,
+        FileName = 1,
+        OptionList = 2,
+    }
 
-	// synth.h
+    public enum FluidTypes
+    {
+        NoType = -1,
+        NumericType,
+        IntegerType,
+        StringType,
+        SetType,
+    }
 
-	public enum FluidChorusMod
-	{
-		Sine = 0,
-		Triangle = 1,
-	}
+    // synth.h
 
-	public enum FluidInterpolation
-	{
-		None = 0,
-		Linear = 1,
-		FourthOrder = 4,
-		SeventhOrder = 7,
-	}
+    public enum FluidChorusMod
+    {
+        Sine = 0,
+        Triangle = 1,
+    }
 
-	// midi.h
+    public enum FluidInterpolation
+    {
+        None = 0,
+        Linear = 1,
+        FourthOrder = 4,
+        SeventhOrder = 7,
+    }
 
-	public enum FluidMidiRouterRuleType
-	{
-		Note,
-		CC,
-		ProgramChange,
-		PitchBend,
-		ChannelPressure,
-		KeyPressure,
-		TotalCount, // huh, doesn't make sense as "real" enum
-	}
+    // midi.h
 
-	public enum FluidPlayerStatus
-	{
-		Ready,
-		Playing,
-		Done,
-	}
+    public enum FluidMidiRouterRuleType
+    {
+        Note,
+        CC,
+        ProgramChange,
+        PitchBend,
+        ChannelPressure,
+        KeyPressure,
+        TotalCount, // huh, doesn't make sense as "real" enum
+    }
+
+    public enum FluidPlayerStatus
+    {
+        Ready,
+        Playing,
+        Done,
+    }
 }
-

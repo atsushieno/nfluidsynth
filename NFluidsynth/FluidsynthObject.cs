@@ -5,18 +5,13 @@ namespace NFluidsynth
 {
     public abstract class FluidsynthObject : IDisposable
     {
-        private readonly bool _disposeRequired;
-
-        protected FluidsynthObject(IntPtr handle, bool disposeRequired)
+        protected FluidsynthObject(IntPtr handle)
         {
             Handle = handle;
-            _disposeRequired = disposeRequired;
         }
 
         public bool Disposed { get; private set; }
         internal IntPtr Handle { get; }
-
-        protected abstract void OnDispose();
 
         public void Dispose()
         {
@@ -55,7 +50,7 @@ namespace NFluidsynth
 
         ~FluidsynthObject()
         {
-
+            Dispose(false);
         }
     }
 }
