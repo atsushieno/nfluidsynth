@@ -99,14 +99,14 @@ namespace NFluidsynth
                 }
             }
 
-            public Tuple<int, int> IntRange
+            public (int min, int max) IntRange
             {
                 get
                 {
                     _parent.ThrowIfDisposed();
                     Utility.CheckReturnValue(
                         LibFluidsynth.fluid_settings_getint_range(_parent.Handle, _name, out var min, out var max));
-                    return new Tuple<int, int>(min, max);
+                    return (min, max);
                 }
             }
 
@@ -136,14 +136,14 @@ namespace NFluidsynth
                 }
             }
 
-            public Tuple<double, double> DoubleRange
+            public (double min, double max) DoubleRange
             {
                 get
                 {
                     _parent.ThrowIfDisposed();
                     Utility.CheckReturnValue(LibFluidsynth.fluid_settings_getnum_range(_parent.Handle, _name,
                         out var min, out var max));
-                    return new Tuple<double, double>(min, max);
+                    return (min, max);
                 }
             }
 
