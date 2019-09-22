@@ -1,15 +1,29 @@
-﻿using System;
-using NFluidsynth.Native;
+﻿using NFluidsynth.Native;
 
 namespace NFluidsynth
 {
-    public delegate int MidiEventHandler(MidiEvent evt);
-
     public class MidiRouter : FluidsynthObject
     {
+        // Keep these around to prevent the GC eating them.
+        // ReSharper disable once NotAccessedField.Local
+        private readonly Settings _settings;
+        // ReSharper disable once NotAccessedField.Local
+        private readonly LibFluidsynth.handle_midi_event_func_t _handler;
+
         public unsafe MidiRouter(Settings settings, MidiEventHandler handler)
-            : base(LibFluidsynth.new_fluid_midi_router(settings.Handle, (d, e) => handler(new MidiEvent(e)), null))
+            : base(LibFluidsynth.new_fluid_midi_router(settings.Handle,
+                Utility.PassDelegatePointer<LibFluidsynth.handle_midi_event_func_t>(
+                    (d, e) =>
+                    {
+                        using (var ev = new MidiEvent(e))
+                        {
+                            return handler(ev);
+                        }
+                    },
+                    out var wrapHandler), null))
         {
+            _settings = settings;
+            _handler = wrapHandler;
         }
 
         protected override void Dispose(bool disposed)

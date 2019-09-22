@@ -82,7 +82,7 @@ namespace NFluidsynth.Native
 
         [DllImport(LibraryName)]
         internal static extern fluid_midi_router_t_ptr new_fluid_midi_router(fluid_settings_t_ptr settings,
-            handle_midi_event_func_t handler, void* event_handler_data);
+            IntPtr handler, void* event_handler_data);
 
         [DllImport(LibraryName)]
         internal static extern int delete_fluid_midi_router(fluid_midi_router_t_ptr handler);
