@@ -653,15 +653,20 @@ namespace NFluidsynth
             }
         }
 
-        public unsafe void WriteSample16(int length, Span<ushort> leftOut, int leftOffset, int leftIncrement,
-            Span<ushort> rightOut,
-            int rightOffset, int rightIncrement)
+        public unsafe void WriteSample16(Span<ushort> leftOut, int leftOffset, int leftIncrement,
+            Span<ushort> rightOut, int rightOffset, int rightIncrement)
         {
             ThrowIfDisposed();
+
+            if (leftOut.Length != rightOut.Length)
+            {
+                throw new ArgumentException("Length of left and right buffer must be equal.");
+            }
+
             fixed (ushort* lPtr = leftOut)
             fixed (ushort* rPtr = rightOut)
             {
-                if (LibFluidsynth.fluid_synth_write_s16(Handle, length, lPtr, leftOffset, leftIncrement, rPtr,
+                if (LibFluidsynth.fluid_synth_write_s16(Handle, leftOut.Length, lPtr, leftOffset, leftIncrement, rPtr,
                         rightOffset, rightIncrement) != 0)
                 {
                     OnError("16bit sample write operation failed");
@@ -669,29 +674,29 @@ namespace NFluidsynth
             }
         }
 
-        public unsafe void WriteSampleFloat(int length, Span<float> leftOut, int leftOffset, int leftIncrement,
-            Span<float> rightOut,
-            int rightOffset, int rightIncrement)
+        public unsafe void WriteSampleFloat(Span<float> leftOut, int leftOffset, int leftIncrement,
+            Span<float> rightOut, int rightOffset, int rightIncrement)
         {
+            if (leftOut.Length != rightOut.Length)
+            {
+                throw new ArgumentException("Length of left and right buffer must be equal.");
+            }
+
             ThrowIfDisposed();
             fixed (float* lPtr = leftOut)
             fixed (float* rPtr = rightOut)
             {
-                if (LibFluidsynth.fluid_synth_write_float(Handle, length, lPtr, leftOffset, leftIncrement, rPtr,
+                if (LibFluidsynth.fluid_synth_write_float(Handle, leftOut.Length, lPtr, leftOffset, leftIncrement, rPtr,
                         rightOffset, rightIncrement) != 0)
                     OnError("float sample write operation failed");
             }
         }
 
-        public unsafe void Process(int length, int nIn, Span<float> inBuffer, int nOut, Span<float> outBuffer)
+        public unsafe void Process(int length, int nFx, float** fx, int nOut, float** @out)
         {
             ThrowIfDisposed();
-            fixed (float* inPtr = inBuffer)
-            fixed (float* outPtr = outBuffer)
-            {
-                if (LibFluidsynth.fluid_synth_process(Handle, length, nIn, inPtr, nOut, outPtr) != 0)
-                    OnError("float sample write operation failed");
-            }
+            if (LibFluidsynth.fluid_synth_process(Handle, length, nFx, fx, nOut, @out) != 0)
+                OnError("float sample write operation failed");
         }
 
         public void AddSoundFontLoader(SoundFontLoader loader)

@@ -282,8 +282,8 @@ namespace NFluidsynth.Native
 
         [DllImport(LibraryName)]
         internal static extern int fluid_synth_process(fluid_synth_t_ptr synth,
-            int len, int nin, float* in_ignored,
-            int nout, float* outBuffer);
+            int len, int nin, float** in_ignored,
+            int nout, float** outBuffer);
 
         [DllImport(LibraryName)]
         internal static extern void fluid_synth_add_sfloader(fluid_synth_t_ptr synth, fluid_sfloader_t_ptr loader);
