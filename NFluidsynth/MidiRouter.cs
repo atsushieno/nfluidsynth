@@ -3,12 +3,12 @@ using NFluidsynth.Native;
 
 namespace NFluidsynth
 {
-    public delegate int MidiEventHandler(byte[] data, MidiEvent evt);
+    public delegate int MidiEventHandler(MidiEvent evt);
 
     public class MidiRouter : FluidsynthObject
     {
-        public MidiRouter(Settings settings, MidiEventHandler handler)
-            : base(LibFluidsynth.new_fluid_midi_router(settings.Handle, (d, e) => handler(d, new MidiEvent(e)), null),
+        public unsafe MidiRouter(Settings settings, MidiEventHandler handler)
+            : base(LibFluidsynth.new_fluid_midi_router(settings.Handle, (d, e) => handler(new MidiEvent(e)), null),
                 true)
         {
         }

@@ -11,7 +11,7 @@ namespace NFluidsynth.Native
 {
     internal static unsafe partial class LibFluidsynth
     {
-        internal delegate int handle_midi_event_func_t(byte[] data, fluid_midi_event_t_ptr evt);
+        internal delegate int handle_midi_event_func_t(void* data, fluid_midi_event_t_ptr evt);
 
         [DllImport(LibraryName)]
         internal static extern fluid_midi_event_t_ptr new_fluid_midi_event();
@@ -76,12 +76,12 @@ namespace NFluidsynth.Native
             int val);
 
         [DllImport(LibraryName)]
-        internal static extern int fluid_midi_event_set_sysex(fluid_midi_event_t_ptr evt, byte[] data,
+        internal static extern int fluid_midi_event_set_sysex(fluid_midi_event_t_ptr evt, void* data,
             int size, bool isDynamic);
 
         [DllImport(LibraryName)]
         internal static extern fluid_midi_router_t_ptr new_fluid_midi_router(fluid_settings_t_ptr settings,
-            handle_midi_event_func_t handler, byte[] event_handler_data);
+            handle_midi_event_func_t handler, void* event_handler_data);
 
         [DllImport(LibraryName)]
         internal static extern int delete_fluid_midi_router(fluid_midi_router_t_ptr handler);

@@ -63,9 +63,9 @@ namespace NFluidsynth
 			set { LibFluidsynth.fluid_midi_event_set_pitch (Handle, value); }
 		}
 
-		public void SetSysex (byte [] data, bool isDynamic)
+		public unsafe void SetSysex (void* data, int size, bool isDynamic)
 		{
-			LibFluidsynth.fluid_midi_event_set_sysex (Handle, data, data.Length, isDynamic);
+			LibFluidsynth.fluid_midi_event_set_sysex (Handle, data, size, isDynamic);
 		}
 	}
 }

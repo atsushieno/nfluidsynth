@@ -9,7 +9,7 @@ namespace NFluidsynth.Native
 {
     internal static unsafe partial class LibFluidsynth
     {
-        internal delegate int fluid_audio_func_t(byte* data, int len, int nin, IntPtr inBuffers, int nout,
+        internal delegate int fluid_audio_func_t(void* data, int len, int nin, IntPtr inBuffers, int nout,
             float** outBuffers);
 
         [DllImport(LibraryName)]

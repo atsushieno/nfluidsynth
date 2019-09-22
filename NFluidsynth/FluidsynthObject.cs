@@ -20,11 +20,12 @@ namespace NFluidsynth
 
         public void Dispose()
         {
-            if (_disposeRequired)
-            {
-                OnDispose();
-            }
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
+        protected virtual void Dispose(bool disposing)
+        {
             Disposed = true;
         }
 
@@ -50,6 +51,11 @@ namespace NFluidsynth
             {
                 throw new ObjectDisposedException(nameof(FluidsynthObject));
             }
+        }
+
+        ~FluidsynthObject()
+        {
+
         }
     }
 }
