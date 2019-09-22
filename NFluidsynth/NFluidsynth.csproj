@@ -3,8 +3,6 @@
     <RootNamespace>NFluidsynth</RootNamespace>
     <AssemblyName>NFluidsynth</AssemblyName>
     <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <Copyright>atsushi</Copyright>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>7.3</LangVersion>
