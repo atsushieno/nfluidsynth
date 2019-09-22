@@ -20,7 +20,14 @@ namespace NFluidsynth
             base.Dispose(disposing);
         }
 
-        public SettingEntry this[string name] => new SettingEntry(this, name);
+        public SettingEntry this[string name]
+        {
+            get
+            {
+                ThrowIfDisposed();
+                return new SettingEntry(this, name);
+            }
+        }
 
         public sealed class SettingEntry
         {

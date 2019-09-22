@@ -1,7 +1,9 @@
-﻿using static NFluidsynth.Native.LibFluidsynth;
+﻿using System.Diagnostics.CodeAnalysis;
+using static NFluidsynth.Native.LibFluidsynth;
 
 namespace NFluidsynth
 {
+    [SuppressMessage("ReSharper", "NotAccessedField.Local")]
     public class MidiDriver : FluidsynthObject
     {
         // Keep these around to prevent the GC eating them.
@@ -12,7 +14,13 @@ namespace NFluidsynth
             : base(new_fluid_midi_driver(
                 settings.Handle,
                 Utility.PassDelegatePointer<handle_midi_event_func_t>(
-                    (d, e) => handler(new MidiEvent(e)), out var b),
+                    (d, e) =>
+                    {
+                        using (var ev = new MidiEvent(e))
+                        {
+                            return handler(ev);
+                        }
+                    }, out var b),
                 null))
         {
             _handler = b;

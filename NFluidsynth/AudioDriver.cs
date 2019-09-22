@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using NFluidsynth.Native;
+﻿using NFluidsynth.Native;
 
 namespace NFluidsynth
 {

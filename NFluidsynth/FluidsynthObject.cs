@@ -3,6 +3,9 @@ using System.Runtime.CompilerServices;
 
 namespace NFluidsynth
 {
+    /// <summary>
+    ///     Provides basic functionality for all native Fluidsynth objects.
+    /// </summary>
     public abstract class FluidsynthObject : IDisposable
     {
         protected FluidsynthObject(IntPtr handle)
@@ -11,6 +14,10 @@ namespace NFluidsynth
         }
 
         public bool Disposed { get; private set; }
+
+        /// <summary>
+        ///     Handle to the native Fluidsynth C object.
+        /// </summary>
         internal IntPtr Handle { get; }
 
         public void Dispose()
