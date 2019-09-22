@@ -24,7 +24,7 @@ namespace NFluidsynth.Sample
                         syn.LoadSoundFont("/usr/share/sounds/sf2/FluidR3_GM.sf2", true);
                     for (int i = 0; i < 16; i++)
                         syn.SoundFontSelect(i, 0);
-                    var files = args.Where(a => Synth.IsMidiFile(a));
+                    var files = args.Where(SoundFont.IsMidiFile);
                     if (files.Any())
                     {
                         foreach (var arg in files)
