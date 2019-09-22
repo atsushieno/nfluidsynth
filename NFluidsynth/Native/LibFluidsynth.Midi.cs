@@ -165,6 +165,10 @@ namespace NFluidsynth.Native
             int bpm);
 
         [DllImport(LibraryName)]
+        internal static extern int fluid_player_set_playback_callback(fluid_player_t_ptr player,
+            IntPtr handler, void* handlerData);
+
+        [DllImport(LibraryName)]
         internal static extern FluidPlayerStatus fluid_player_get_status(fluid_player_t_ptr player);
     }
 }

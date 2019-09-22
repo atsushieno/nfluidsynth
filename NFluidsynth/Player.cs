@@ -4,6 +4,9 @@ namespace NFluidsynth
 {
     public class Player : FluidsynthObject
     {
+        // Keep this here so the GC doesn't erase it from existence
+        private LibFluidsynth.handle_midi_event_func_t _handler;
+
         public Player(Synth synth)
             : base(LibFluidsynth.new_fluid_player(synth.Handle))
         {
@@ -54,9 +57,20 @@ namespace NFluidsynth
             LibFluidsynth.fluid_player_set_bpm(Handle, bpm);
         }
 
-        public FluidPlayerStatus Status
+        public unsafe void SetPlaybackCallback(MidiEventHandler handler)
         {
-            get { return LibFluidsynth.fluid_player_get_status(Handle); }
+            LibFluidsynth.fluid_player_set_playback_callback(Handle,
+                Utility.PassDelegatePointer<LibFluidsynth.handle_midi_event_func_t>(
+                    (d, e) =>
+                    {
+                        using (var ev = new MidiEvent(e))
+                        {
+                            return handler(ev);
+                        }
+                    }, out var b), null);
+            _handler = b;
         }
+
+        public FluidPlayerStatus Status => LibFluidsynth.fluid_player_get_status(Handle);
     }
 }
