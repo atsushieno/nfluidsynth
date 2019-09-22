@@ -18,7 +18,7 @@ namespace NFluidsynth.Sample
                 using (var syn = new Synth(settings))
                 {
                     foreach (var arg in args)
-                        if (Synth.IsSoundFont(arg))
+                        if (SoundFont.IsSoundFont(arg))
                             syn.LoadSoundFont(arg, true);
                     if (syn.FontCount == 0)
                         syn.LoadSoundFont("/usr/share/sounds/sf2/FluidR3_GM.sf2", true);

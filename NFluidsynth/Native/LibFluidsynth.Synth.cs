@@ -118,7 +118,7 @@ namespace NFluidsynth.Native
         internal static extern int fluid_synth_add_sfont(fluid_synth_t_ptr synth, fluid_sfont_t_ptr sfont);
 
         [DllImport(LibraryName)]
-        internal static extern void fluid_synth_remove_sfont(fluid_synth_t_ptr synth, fluid_sfont_t_ptr sfont);
+        internal static extern int fluid_synth_remove_sfont(fluid_synth_t_ptr synth, fluid_sfont_t_ptr sfont);
 
         [DllImport(LibraryName)]
         internal static extern int fluid_synth_sfcount(fluid_synth_t_ptr synth);
