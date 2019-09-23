@@ -62,24 +62,26 @@ namespace NFluidsynth
                 }
             }
 
-            public string StringDefault
+            public unsafe string StringDefault
             {
                 get
                 {
                     _parent.ThrowIfDisposed();
                     Utility.CheckReturnValue(
                         LibFluidsynth.fluid_settings_getstr_default(_parent.Handle, _name, out var ret));
-                    return ret;
+
+                    return Utility.PtrToStringUTF8(ret);
                 }
             }
 
-            public string StringValue
+            public unsafe string StringValue
             {
                 get
                 {
                     _parent.ThrowIfDisposed();
                     Utility.CheckReturnValue(LibFluidsynth.fluid_settings_dupstr(_parent.Handle, _name, out var ret));
-                    return ret;
+
+                    return Utility.PtrToStringUTF8(ret);
                 }
                 set
                 {
@@ -88,13 +90,13 @@ namespace NFluidsynth
                 }
             }
 
-            public string IntDefault
+            public int IntDefault
             {
                 get
                 {
                     _parent.ThrowIfDisposed();
                     Utility.CheckReturnValue(
-                        LibFluidsynth.fluid_settings_getstr_default(_parent.Handle, _name, out var ret));
+                        LibFluidsynth.fluid_settings_getint_default(_parent.Handle, _name, out var ret));
                     return ret;
                 }
             }

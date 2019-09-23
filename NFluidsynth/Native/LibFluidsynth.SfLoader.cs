@@ -8,7 +8,7 @@ using fluid_sample_t_ptr = System.IntPtr;
 
 namespace NFluidsynth.Native
 {
-    internal static partial class LibFluidsynth
+    internal static unsafe partial class LibFluidsynth
     {
         internal delegate fluid_sfont_t_ptr fluid_sfloader_load_t(fluid_sfloader_t_ptr loader, string filename);
 
@@ -107,7 +107,8 @@ namespace NFluidsynth.Native
         internal static extern IntPtr fluid_sample_sizeof();
 
         [DllImport(LibraryName)]
-        internal static extern int fluid_sample_set_name(fluid_sample_t_ptr sample, string name);
+        internal static extern int fluid_sample_set_name(fluid_sample_t_ptr sample,
+            [MarshalAs(UnmanagedType.LPUTF8Str)] string name);
 
         [DllImport(LibraryName)]
         internal static extern int fluid_sample_set_sound_data(fluid_sample_t_ptr sample,

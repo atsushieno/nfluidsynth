@@ -80,7 +80,7 @@ namespace NFluidsynth.Native
 
         [DllImport(LibraryName)]
         internal static extern int fluid_synth_program_select_by_sfont_name(fluid_synth_t_ptr synth, int chan,
-            string sfont_name, uint bank_num, uint preset_num);
+            [MarshalAs(UnmanagedType.LPUTF8Str)] string sfont_name, uint bank_num, uint preset_num);
 
         [DllImport(LibraryName)]
         internal static extern int fluid_synth_get_program(fluid_synth_t_ptr synth, int chan, out int sfont_id,
@@ -106,7 +106,8 @@ namespace NFluidsynth.Native
         internal static extern int fluid_synth_stop(fluid_synth_t_ptr synth, uint id);
 
         [DllImport(LibraryName)]
-        internal static extern int fluid_synth_sfload(fluid_synth_t_ptr synth, string filename, bool reset_presets);
+        internal static extern int fluid_synth_sfload(fluid_synth_t_ptr synth,
+            [MarshalAs(UnmanagedType.LPUTF8Str)] string filename, bool reset_presets);
 
         [DllImport(LibraryName)]
         internal static extern int fluid_synth_sfreload(fluid_synth_t_ptr synth, uint id);
@@ -132,7 +133,8 @@ namespace NFluidsynth.Native
             uint id);
 
         [DllImport(LibraryName)]
-        internal static extern fluid_sfont_t_ptr fluid_synth_get_sfont_by_name(fluid_synth_t_ptr synth, string name);
+        internal static extern fluid_sfont_t_ptr fluid_synth_get_sfont_by_name(fluid_synth_t_ptr synth,
+            [MarshalAs(UnmanagedType.LPUTF8Str)] string name);
 
         [DllImport(LibraryName)]
         internal static extern int fluid_synth_set_bank_offset(fluid_synth_t_ptr synth, int sfont_id, int offset);
@@ -229,12 +231,12 @@ namespace NFluidsynth.Native
 
         [DllImport(LibraryName)]
         internal static extern int fluid_synth_activate_key_tuning(fluid_synth_t_ptr synth,
-            int bank, int prog, string name,
+            int bank, int prog, [MarshalAs(UnmanagedType.LPUTF8Str)] string name,
             double* pitch, bool apply);
 
         [DllImport(LibraryName)]
         internal static extern int fluid_synth_activate_octave_tuning(fluid_synth_t_ptr synth,
-            int bank, int prog, string name,
+            int bank, int prog, [MarshalAs(UnmanagedType.LPUTF8Str)] string name,
             double* pitch, bool apply);
 
         [DllImport(LibraryName)]
