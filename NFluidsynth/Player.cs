@@ -1,4 +1,5 @@
-﻿using NFluidsynth.Native;
+﻿using System;
+using NFluidsynth.Native;
 
 namespace NFluidsynth
 {
@@ -25,6 +26,14 @@ namespace NFluidsynth
         public void Add(string midifile)
         {
             LibFluidsynth.fluid_player_add(Handle, midifile);
+        }
+
+        public unsafe void AddMem(ReadOnlySpan<byte> buffer)
+        {
+            fixed (byte* ptr = buffer)
+            {
+                LibFluidsynth.fluid_player_add_mem(Handle, (IntPtr) ptr, buffer.Length);
+            }
         }
 
         public void Play()
