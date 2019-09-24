@@ -28,7 +28,7 @@ namespace NFluidsynth
             LibFluidsynth.fluid_player_add(Handle, midifile);
         }
 
-        public unsafe void AddMem(Span<byte> buffer)
+        public unsafe void AddMem(ReadOnlySpan<byte> buffer)
         {
             fixed (byte* ptr = buffer)
             {
