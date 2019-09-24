@@ -144,6 +144,9 @@ namespace NFluidsynth.Native
         internal static extern int fluid_player_add(fluid_player_t_ptr player, string midifile);
 
         [DllImport(LibraryName)]
+        internal static extern int fluid_player_add_mem(fluid_player_t_ptr player, IntPtr buffer, int size);
+
+        [DllImport(LibraryName)]
         internal static extern int fluid_player_play(fluid_player_t_ptr player);
 
         [DllImport(LibraryName)]
