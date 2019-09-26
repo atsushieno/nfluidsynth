@@ -19,7 +19,7 @@ namespace NFluidsynth.Native
                 {
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
-                        return NativeLibrary.Load("/home/pj/Projects/fluidsynth/build/src/libfluidsynth.so");
+                        return NativeLibrary.Load("libfluidsynth.so");
                     }
 
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
