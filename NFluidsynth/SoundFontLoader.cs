@@ -8,7 +8,7 @@ namespace NFluidsynth
 	public delegate SoundFont SoundFontLoaderLoadDelegate (SoundFontLoader loader, string filename);
 	public delegate SoundFont SoundFontLoaderFreeDelegate (SoundFontLoader loader);
 
-	public abstract class SoundFontLoaderCallbacks
+    public abstract class SoundFontLoaderCallbacks
 	{
 		// used as fluid_sfloader_callback_open_t
 		public abstract IntPtr Open (string filename);
@@ -28,13 +28,20 @@ namespace NFluidsynth
 	{
 		IntPtr handle; // fluid_sfloader_t*
 
+        // We keep these around so the GC doesn't eat them.
+        private fluid_sfloader_callback_open_t _open;
+        private fluid_sfloader_callback_read_t _read;
+        private fluid_sfloader_callback_seek_t _seek;
+        private fluid_sfloader_callback_tell_t _tell;
+        private fluid_sfloader_callback_close_t _close;
+
 		public static SoundFontLoader NewDefaultSoundFontLoader (Settings settings)
 		{
 			return new SoundFontLoader ( new_fluid_defsfloader (settings.Handle));
 		}
 
 		public SoundFontLoader (SoundFontLoaderLoadDelegate load, SoundFontLoaderFreeDelegate free)
-			: this ( new_fluid_sfloader ((loaderHandle, filename) => load (new SoundFontLoader (loaderHandle), filename).Handle, (loaderHandle) => free (new SoundFontLoader (loaderHandle))))
+			: this ( new_fluid_sfloader ((loaderHandle, filename) => load (new SoundFontLoader (loaderHandle), filename).Handle, loaderHandle => free (new SoundFontLoader (loaderHandle))))
 		{
 		}
 
@@ -43,24 +50,19 @@ namespace NFluidsynth
 			this.handle = handle;
 		}
 
-		GCHandle callbacks_handle;
-
-		protected void SetCallbacks (SoundFontLoaderCallbacks callbacks)
+        public void SetCallbacks (SoundFontLoaderCallbacks callbacks)
 		{
-			callbacks_handle = GCHandle.Alloc (callbacks);
-			 fluid_sfloader_set_callbacks (handle,
-			                                       callbacks.Open,
-			                                       callbacks.Read,
-			                                       callbacks.Seek,
-			                                       callbacks.Tell,
-			                                       callbacks.Close);
-		}
+            fluid_sfloader_set_callbacks (handle,
+                 Utility.PassDelegatePointer(callbacks.Open, out _open),
+                 Utility.PassDelegatePointer(callbacks.Read, out _read),
+                 Utility.PassDelegatePointer(callbacks.Seek, out _seek),
+                 Utility.PassDelegatePointer(callbacks.Tell, out _tell),
+                 Utility.PassDelegatePointer(callbacks.Close, out _close));
+        }
 
 		public virtual void Dispose ()
 		{
-			if (callbacks_handle.IsAllocated)
-				callbacks_handle.Free ();
-			if (handle != IntPtr.Zero)
+            if (handle != IntPtr.Zero)
 				 delete_fluid_sfloader (handle);
 			handle = IntPtr.Zero;
 		}

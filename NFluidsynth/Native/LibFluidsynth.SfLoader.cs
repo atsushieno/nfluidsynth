@@ -36,11 +36,7 @@ namespace NFluidsynth.Native
 
         [DllImport(LibraryName)]
         internal static extern int fluid_sfloader_set_callbacks(fluid_sfloader_t_ptr loader,
-            fluid_sfloader_callback_open_t open,
-            fluid_sfloader_callback_read_t read,
-            fluid_sfloader_callback_seek_t seek,
-            fluid_sfloader_callback_tell_t tell,
-            fluid_sfloader_callback_close_t close);
+            IntPtr open, IntPtr read, IntPtr seek, IntPtr tell, IntPtr close);
 
         [DllImport(LibraryName)]
         internal static extern int fluid_sfloader_set_data(fluid_sfloader_t_ptr loader, IntPtr data);
