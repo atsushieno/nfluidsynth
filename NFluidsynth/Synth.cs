@@ -653,20 +653,28 @@ namespace NFluidsynth
             }
         }
 
-        public unsafe void WriteSample16(Span<ushort> leftOut, int leftOffset, int leftIncrement,
+        public unsafe void WriteSample16(int count, Span<ushort> leftOut, int leftOffset, int leftIncrement,
             Span<ushort> rightOut, int rightOffset, int rightIncrement)
         {
             ThrowIfDisposed();
 
-            if (leftOut.Length != rightOut.Length)
+            var leftNecessarySize = SampleOutputBufferSizeNecessary(count, leftOffset, leftIncrement);
+            var rightNecessarySize = SampleOutputBufferSizeNecessary(count, rightOffset, rightIncrement);
+
+            if (leftOut.Length < leftNecessarySize)
             {
-                throw new ArgumentException("Length of left and right buffer must be equal.");
+                throw new ArgumentException("Left output buffer is too short!", nameof(leftOut));
+            }
+
+            if (rightOut.Length < rightNecessarySize)
+            {
+                throw new ArgumentException("Right output buffer is too short!", nameof(rightOut));
             }
 
             fixed (ushort* lPtr = leftOut)
             fixed (ushort* rPtr = rightOut)
             {
-                if (LibFluidsynth.fluid_synth_write_s16(Handle, leftOut.Length, lPtr, leftOffset, leftIncrement, rPtr,
+                if (LibFluidsynth.fluid_synth_write_s16(Handle, count, lPtr, leftOffset, leftIncrement, rPtr,
                         rightOffset, rightIncrement) != 0)
                 {
                     OnError("16bit sample write operation failed");
@@ -674,22 +682,42 @@ namespace NFluidsynth
             }
         }
 
-        public unsafe void WriteSampleFloat(Span<float> leftOut, int leftOffset, int leftIncrement,
+        public unsafe void WriteSampleFloat(int count, Span<float> leftOut, int leftOffset, int leftIncrement,
             Span<float> rightOut, int rightOffset, int rightIncrement)
         {
-            if (leftOut.Length != rightOut.Length)
+            ThrowIfDisposed();
+
+            var leftNecessarySize = SampleOutputBufferSizeNecessary(count, leftOffset, leftIncrement);
+            var rightNecessarySize = SampleOutputBufferSizeNecessary(count, rightOffset, rightIncrement);
+
+            if (leftOut.Length < leftNecessarySize)
             {
-                throw new ArgumentException("Length of left and right buffer must be equal.");
+                throw new ArgumentException("Left output buffer is too short!", nameof(leftOut));
             }
 
-            ThrowIfDisposed();
+            if (rightOut.Length < rightNecessarySize)
+            {
+                throw new ArgumentException("Right output buffer is too short!", nameof(rightOut));
+            }
+
             fixed (float* lPtr = leftOut)
             fixed (float* rPtr = rightOut)
             {
-                if (LibFluidsynth.fluid_synth_write_float(Handle, leftOut.Length, lPtr, leftOffset, leftIncrement, rPtr,
+                if (LibFluidsynth.fluid_synth_write_float(Handle, count, lPtr, leftOffset, leftIncrement, rPtr,
                         rightOffset, rightIncrement) != 0)
                     OnError("float sample write operation failed");
             }
+        }
+
+        private static int SampleOutputBufferSizeNecessary(int count, int offset, int increment)
+        {
+            if (count == 0)
+            {
+                // Fluidsynth writes nothing if count is zero, so passing a zero size buffer is valid I guess.
+                // Why would you want to? No idea!
+                return 0;
+            }
+            return 1 + (count - 1) * increment + offset;
         }
 
         public unsafe void Process(int length, int nFx, float** fx, int nOut, float** @out)
