@@ -1,17 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>NFluidsynth</RootNamespace>
-    <AssemblyName>Wizards.NFluidsynth</AssemblyName>
+    <AssemblyName>NFluidsynth</AssemblyName>
     <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
-    <Copyright>Space Wizards Federation, atsushi</Copyright>
-    <Authors>Space Wizards Federation, atsushi</Authors>
-    <Owners>Space Wizards Federation</Owners>
+    <Copyright>atsushi</Copyright>
+    <Authors>atsushi</Authors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>7.3</LangVersion>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <Description>.NET binding to Fluidsynth.</Description>
     <PackageProjectUrl>https://github.com/space-wizards/nfluidsynth</PackageProjectUrl>
-    <Company>Space Wizards Federation</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
