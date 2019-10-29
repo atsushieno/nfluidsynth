@@ -18,7 +18,7 @@ namespace NFluidsynth
         /// <summary>
         ///     Handle to the native Fluidsynth C object.
         /// </summary>
-        internal IntPtr Handle { get; }
+        public IntPtr Handle { get; }
 
         public void Dispose()
         {

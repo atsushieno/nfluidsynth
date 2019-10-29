@@ -1,7 +1,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>nfluidsynth</id>
-    <version>0.2.2</version>
+    <version>0.2.3</version>
     <description>libfluidsynth C# binding</description>
     <authors>atsushieno</authors>
     <owners>atsushieno</owners>
