@@ -28,12 +28,17 @@ namespace NFluidsynth
             LibFluidsynth.fluid_player_add(Handle, midifile);
         }
 
+        #if NET472 || NETCOREAPP
         public unsafe void AddMem(ReadOnlySpan<byte> buffer)
         {
             fixed (byte* ptr = buffer)
-            {
-                LibFluidsynth.fluid_player_add_mem(Handle, (IntPtr) ptr, buffer.Length);
-            }
+                AddMem ((IntPtr) ptr, buffer.Length);
+        }
+        #endif
+
+        public void AddMem(IntPtr buffer, int length)
+        {
+            LibFluidsynth.fluid_player_add_mem(Handle, buffer, length);
         }
 
         public void Play()

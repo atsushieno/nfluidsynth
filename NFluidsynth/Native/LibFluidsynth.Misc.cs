@@ -6,10 +6,10 @@ namespace NFluidsynth.Native
     internal static partial class LibFluidsynth
     {
         [DllImport(LibraryName)]
-        internal static extern int fluid_is_soundfont([MarshalAs(UnmanagedType.LPUTF8Str)] string filename);
+        internal static extern int fluid_is_soundfont([MarshalAs(LP_Str)] string filename);
 
         [DllImport(LibraryName)]
-        internal static extern int fluid_is_midifile([MarshalAs(UnmanagedType.LPUTF8Str)] string filename);
+        internal static extern int fluid_is_midifile([MarshalAs(LP_Str)] string filename);
 
         [DllImport(LibraryName)]
         internal static extern IntPtr fluid_set_log_function(int severity, Logger.LoggerDelegate func, IntPtr data);

@@ -12,6 +12,12 @@ namespace NFluidsynth.Native
 {
     internal static unsafe partial class LibFluidsynth
     {
+
+#if NET472 || NETCOREAPP
+        const UnmanagedType LP_Str = System.Runtime.InteropServices.UnmanagedType.LPUTF8Str;
+#else
+        const UnmanagedType LP_Str = System.Runtime.InteropServices.UnmanagedType.LPStr;
+#endif
         internal delegate int handle_midi_event_func_t(void* data, fluid_midi_event_t_ptr evt);
 
         [DllImport(LibraryName)]
@@ -142,7 +148,7 @@ namespace NFluidsynth.Native
 
         [DllImport(LibraryName)]
         internal static extern int fluid_player_add(fluid_player_t_ptr player,
-            [MarshalAs(UnmanagedType.LPUTF8Str)] string midifile);
+            [MarshalAs(LP_Str)] string midifile);
 
         [DllImport(LibraryName)]
         internal static extern int fluid_player_add_mem(fluid_player_t_ptr player, IntPtr buffer, int size);

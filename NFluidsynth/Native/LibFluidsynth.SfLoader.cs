@@ -104,7 +104,7 @@ namespace NFluidsynth.Native
 
         [DllImport(LibraryName)]
         internal static extern int fluid_sample_set_name(fluid_sample_t_ptr sample,
-            [MarshalAs(UnmanagedType.LPUTF8Str)] string name);
+            [MarshalAs(LP_Str)] string name);
 
         [DllImport(LibraryName)]
         internal static extern int fluid_sample_set_sound_data(fluid_sample_t_ptr sample,
