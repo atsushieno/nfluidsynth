@@ -147,34 +147,40 @@ namespace NFluidsynth.MidiManager
                 throw new InvalidOperationException("The MIDI output is not open.");
 
             int ch = msg[offset] & 0x0F;
-            switch (msg[offset] & 0xF0)
-            {
+            switch (msg [offset] & 0xF0) {
                 case 0x80:
-                    synth.NoteOff(ch, msg[offset + 1]);
+                    synth.NoteOff (ch, msg [offset + 1]);
                     break;
                 case 0x90:
-                    if (msg[offset + 2] == 0)
-                        synth.NoteOff(ch, msg[offset + 1]);
+                    if (msg [offset + 2] == 0)
+                        synth.NoteOff (ch, msg [offset + 1]);
                     else
-                        synth.NoteOn(ch, msg[offset + 1], msg[offset + 2]);
+                        synth.NoteOn (ch, msg [offset + 1], msg [offset + 2]);
                     break;
                 case 0xA0:
-                    synth.KeyPressure(ch, msg[offset + 1], msg[offset + 2]);
+                    synth.KeyPressure (ch, msg [offset + 1], msg [offset + 2]);
                     break;
                 case 0xB0:
-                    synth.CC(ch, msg[offset + 1], msg[offset + 2]);
+                    synth.CC (ch, msg [offset + 1], msg [offset + 2]);
                     break;
                 case 0xC0:
-                    synth.ProgramChange(ch, msg[offset + 1]);
+                    synth.ProgramChange (ch, msg [offset + 1]);
                     break;
                 case 0xD0:
-                    synth.ChannelPressure(ch, msg[offset + 1]);
+                    synth.ChannelPressure (ch, msg [offset + 1]);
                     break;
                 case 0xE0:
-                    synth.PitchBend(ch, msg[offset + 1] + msg[offset + 2] * 0x80);
+                    synth.PitchBend (ch, msg [offset + 1] + msg [offset + 2] * 0x80);
                     break;
                 case 0xF0:
-                    synth.Sysex(new ArraySegment<byte>(msg, offset, length).ToArray(), null);
+#if NET472 || NETCOREAPP
+                    synth.Sysex (new ArraySegment<byte> (msg, offset, length), null);
+#else
+                    unsafe {
+                        fixed (byte* ptr = msg)
+                            synth.Sysex ((IntPtr) (ptr + offset), length, IntPtr.Zero, 0);
+                    }
+                    #endif
                     break;
             }
         }
