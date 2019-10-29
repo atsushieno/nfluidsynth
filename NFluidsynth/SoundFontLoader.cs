@@ -77,7 +77,8 @@ namespace NFluidsynth
             handle = IntPtr.Zero;
         }
 
-        internal IntPtr Handle
+        // It has to be made public for use in the derived loader classes
+        public IntPtr Handle
         {
             get { return handle; }
         }
