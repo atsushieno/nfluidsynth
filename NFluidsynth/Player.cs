@@ -35,6 +35,12 @@ namespace NFluidsynth
                 AddMem ((IntPtr) ptr, buffer.Length);
         }
         #endif
+        
+        public unsafe void AddMem(byte [] buffer, int offset, int length)
+        {
+            fixed (byte* ptr = buffer)
+                AddMem ((IntPtr) (ptr + offset), buffer.Length);
+        }
 
         public void AddMem(IntPtr buffer, int length)
         {

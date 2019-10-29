@@ -5,7 +5,7 @@ namespace NFluidsynth.Native
 {
     internal static partial class LibFluidsynth
     {
-        public const string LibraryName = "fluidsynth.dll";
+        public const string LibraryName = "fluidsynth";
 
         public const int FluidOk = 0;
         public const int FluidFailed = -1;

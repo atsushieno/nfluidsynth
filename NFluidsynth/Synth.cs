@@ -77,6 +77,13 @@ namespace NFluidsynth
         }
         #endif
 
+        public unsafe bool Sysex (byte [] input, int inputOffset, int inputLength, byte [] output, int outputOffset, int outputLength, bool dryRun = false)
+        {
+            fixed (byte* iPtr = input)
+            fixed (byte* oPtr = output)
+                return Sysex ((IntPtr) iPtr, inputLength, (IntPtr) oPtr, outputLength, dryRun);
+        }
+
         public bool Sysex(IntPtr input, int inputLength, IntPtr output, int outputLength, bool dryRun = false)
         {
             ThrowIfDisposed();
@@ -556,6 +563,12 @@ namespace NFluidsynth
                 ActivateKeyTuning (bank, prog, name, (IntPtr) pPtr, pitch.Length, apply);
         }
         #endif
+        
+        public unsafe void ActivateKeyTuning (int bank, int prog, string name, double [] pitch, int pitchOffset, int pitchLength, bool apply)
+        {
+            fixed (double* pPtr = pitch)
+                ActivateKeyTuning (bank, prog, name, (IntPtr) (pPtr + pitchOffset), pitchLength, apply);
+        }
 
         public void ActivateKeyTuning(int bank, int prog, string name, IntPtr pitch, int pitchLength, bool apply)
         {
@@ -583,6 +596,12 @@ namespace NFluidsynth
         }
         #endif
         
+        public unsafe void ActivateOctaveTuning (int bank, int prog, string name, double [] pitch, int pitchOffset, int pitchLength, bool apply)
+        {
+            fixed (double* pPtr = pitch)
+                ActivateOctaveTuning (bank, prog, name, (IntPtr) (pPtr + pitchOffset), pitchLength, apply);
+        }
+        
         public void ActivateOctaveTuning(int bank, int prog, string name, IntPtr pitch, int pitchLength, bool apply)
         {
             ThrowIfDisposed();
@@ -607,6 +626,14 @@ namespace NFluidsynth
                 TuneNotes (bank, prog, (IntPtr) kPtr, keys.Length, (IntPtr) pPtr, pitch.Length, apply);
         }
         #endif
+        
+        public unsafe void TuneNotes (int bank, int prog, int [] keys, int keysOffset, int keysLength, double [] pitch, int pitchOffset, int pitchLength,
+            bool apply)
+        {
+            fixed (int* kPtr = keys)
+            fixed (double* pPtr = pitch)
+                TuneNotes (bank, prog, (IntPtr) (kPtr + keysOffset), keysLength, (IntPtr) (pPtr + pitchOffset), pitchLength, apply);
+        }
         
         public void TuneNotes(int bank, int prog, IntPtr keys, int keysLength, IntPtr pitch, int pitchLength, bool apply)
         {
@@ -694,6 +721,15 @@ namespace NFluidsynth
         }
         #endif
 
+        public unsafe void WriteSample16 (int count, ushort [] leftOut, int leftOffset, int leftOutLength, int leftIncrement,
+            ushort [] rightOut, int rightOffset, int rightOutLength, int rightIncrement)
+        {
+            fixed (ushort* lPtr = leftOut)
+            fixed (ushort* rPtr = rightOut)
+                WriteSample16 (count, (IntPtr) lPtr, leftOffset, leftOut.Length, leftIncrement,
+                    (IntPtr) rPtr, rightOffset, rightOut.Length, rightIncrement);
+        }
+
         public void WriteSample16(int count, IntPtr leftOut, int leftOffset, int leftOutLength, int leftIncrement,
             IntPtr rightOut, int rightOffset, int rightOutLength, int rightIncrement)
         {
@@ -734,6 +770,15 @@ namespace NFluidsynth
         }
         #endif
 
+        public unsafe void WriteSampleFloat(int count, float [] leftOut, int leftOffset, int leftOutLength, int leftIncrement,
+            float [] rightOut, int rightOffset, int rightOutLength, int rightIncrement)
+        {
+            fixed (float* lPtr = leftOut)
+            fixed (float* rPtr = rightOut)
+                WriteSampleFloat (count, (IntPtr) lPtr, leftOffset, leftOut.Length, leftIncrement,
+                    (IntPtr) rPtr, rightOffset, rightOut.Length, rightIncrement);
+        }
+        
         public void WriteSampleFloat(int count, IntPtr leftOut, int leftOffset, int leftOutLength, int leftIncrement,
             IntPtr rightOut, int rightOffset, int rightOutLength, int rightIncrement)
         {
