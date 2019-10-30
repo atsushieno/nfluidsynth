@@ -1,7 +1,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>nfluidsynth</id>
-    <version>0.2.4</version>
+    <version>0.2.5</version>
     <description>libfluidsynth C# binding</description>
     <authors>atsushieno</authors>
     <owners>atsushieno</owners>
@@ -9,6 +9,11 @@
     <projectUrl>https://github.com/atsushieno/nfluidsynth</projectUrl>
     <summary>see github commits, there is not a lot of changes.</summary>
     <dependencies>
+      <group targetFramework=".NETFramework4.7.2">
+        <dependency id="System.Memory" version="4.5.3" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETCoreApp3.0" />
+      <group targetFramework=".NETStandard2.0" />
       <dependency id="managed-midi" version="1.9" />
     </dependencies>
   </metadata>
