@@ -9,7 +9,13 @@
     <projectUrl>https://github.com/atsushieno/nfluidsynth</projectUrl>
     <summary>see github commits, there is not a lot of changes.</summary>
     <dependencies>
-      <dependency id="managed-midi" version="1.9" />
+      <group targetFramework=".NETFramework4.7.2">
+        <dependency id="System.Memory" version="4.5.3" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETCoreApp3.0" />
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="managed-midi" version="1.9" />  
+      </group>
     </dependencies>
   </metadata>
   <files>
