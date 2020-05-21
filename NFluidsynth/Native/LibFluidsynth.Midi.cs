@@ -180,5 +180,20 @@ namespace NFluidsynth.Native
 
         [DllImport(LibraryName)]
         internal static extern FluidPlayerStatus fluid_player_get_status(fluid_player_t_ptr player);
+
+        [DllImport(LibraryName)]
+        internal static extern int fluid_player_get_current_tick(fluid_player_t_ptr player);
+
+        [DllImport(LibraryName)]
+        internal static extern int fluid_player_get_total_ticks(fluid_player_t_ptr player);
+
+        [DllImport(LibraryName)]
+        internal static extern int fluid_player_get_bpm(fluid_player_t_ptr player);
+
+        [DllImport(LibraryName)]
+        internal static extern int fluid_player_get_midi_tempo(fluid_player_t_ptr player);
+
+        [DllImport(LibraryName)]
+        internal static extern int fluid_player_seek(fluid_player_t_ptr player, int ticks);
     }
 }

@@ -67,14 +67,31 @@ namespace NFluidsynth
             LibFluidsynth.fluid_player_set_loop(Handle, loop);
         }
 
+        [Obsolete("Use " + nameof(MidiTempo) + " property instead.")]
         public void SetTempo(int tempo)
         {
             LibFluidsynth.fluid_player_set_midi_tempo(Handle, tempo);
         }
 
+        [Obsolete("Use " + nameof(Bpm) + " property instead.")]
         public void SetBpm(int bpm)
         {
             LibFluidsynth.fluid_player_set_bpm(Handle, bpm);
+        }
+
+        public int CurrentTick => LibFluidsynth.fluid_player_get_current_tick(Handle);
+        public int GetTotalTicks => LibFluidsynth.fluid_player_get_total_ticks(Handle);
+
+        public int Bpm
+        {
+            get => LibFluidsynth.fluid_player_get_bpm(Handle);
+            set => LibFluidsynth.fluid_player_set_bpm(Handle, value);
+        }
+
+        public int MidiTempo
+        {
+            get => LibFluidsynth.fluid_player_get_midi_tempo(Handle);
+            set => LibFluidsynth.fluid_player_set_midi_tempo(Handle, value);
         }
 
         public unsafe void SetPlaybackCallback(MidiEventHandler handler)
