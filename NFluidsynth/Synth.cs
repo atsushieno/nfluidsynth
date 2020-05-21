@@ -67,7 +67,7 @@ namespace NFluidsynth
 
             return ret;
         }
-        
+
         #if NET472 || NETCOREAPP
         public unsafe bool Sysex (ReadOnlySpan<byte> input, Span<byte> output, bool dryRun = false)
         {
@@ -563,7 +563,7 @@ namespace NFluidsynth
                 ActivateKeyTuning (bank, prog, name, (IntPtr) pPtr, pitch.Length, apply);
         }
         #endif
-        
+
         public unsafe void ActivateKeyTuning (int bank, int prog, string name, double [] pitch, int pitchOffset, int pitchLength, bool apply)
         {
             fixed (double* pPtr = pitch)
@@ -595,13 +595,13 @@ namespace NFluidsynth
                 ActivateOctaveTuning (bank, prog, name, (IntPtr) pPtr, pitch.Length, apply);
         }
         #endif
-        
+
         public unsafe void ActivateOctaveTuning (int bank, int prog, string name, double [] pitch, int pitchOffset, int pitchLength, bool apply)
         {
             fixed (double* pPtr = pitch)
                 ActivateOctaveTuning (bank, prog, name, (IntPtr) (pPtr + pitchOffset), pitchLength, apply);
         }
-        
+
         public void ActivateOctaveTuning(int bank, int prog, string name, IntPtr pitch, int pitchLength, bool apply)
         {
             ThrowIfDisposed();
@@ -626,7 +626,7 @@ namespace NFluidsynth
                 TuneNotes (bank, prog, (IntPtr) kPtr, keys.Length, (IntPtr) pPtr, pitch.Length, apply);
         }
         #endif
-        
+
         public unsafe void TuneNotes (int bank, int prog, int [] keys, int keysOffset, int keysLength, double [] pitch, int pitchOffset, int pitchLength,
             bool apply)
         {
@@ -634,7 +634,7 @@ namespace NFluidsynth
             fixed (double* pPtr = pitch)
                 TuneNotes (bank, prog, (IntPtr) (kPtr + keysOffset), keysLength, (IntPtr) (pPtr + pitchOffset), pitchLength, apply);
         }
-        
+
         public void TuneNotes(int bank, int prog, IntPtr keys, int keysLength, IntPtr pitch, int pitchLength, bool apply)
         {
             ThrowIfDisposed();
@@ -709,7 +709,7 @@ namespace NFluidsynth
                 return LibFluidsynth.fluid_synth_get_cpu_load(Handle);
             }
         }
-        
+
         #if NET472 || NETCOREAPP
         public unsafe void WriteSample16 (int count, Span<ushort> leftOut, int leftOffset, int leftIncrement,
             Span<ushort> rightOut, int rightOffset, int rightIncrement)
@@ -750,14 +750,14 @@ namespace NFluidsynth
 
             unsafe
             {
-                if (LibFluidsynth.fluid_synth_write_s16(Handle, count, (ushort*) leftOut, leftOffset, leftIncrement, 
+                if (LibFluidsynth.fluid_synth_write_s16(Handle, count, (ushort*) leftOut, leftOffset, leftIncrement,
                         (ushort*) rightOut, rightOffset, rightIncrement) != 0)
                 {
                     OnError("16bit sample write operation failed");
                 }
             }
         }
-        
+
         #if NET472 || NETCOREAPP
         public unsafe void WriteSampleFloat (int count, Span<float> leftOut, int leftOffset, int leftIncrement,
             Span<float> rightOut, int rightOffset, int rightIncrement)
@@ -766,7 +766,7 @@ namespace NFluidsynth
             fixed (float* rPtr = rightOut)
                 WriteSampleFloat (count, (IntPtr) lPtr, leftOffset, leftOut.Length, leftIncrement,
                     (IntPtr) rPtr, rightOffset, rightOut.Length, rightIncrement);
-            
+
         }
         #endif
 
@@ -778,7 +778,7 @@ namespace NFluidsynth
                 WriteSampleFloat (count, (IntPtr) lPtr, leftOffset, leftOut.Length, leftIncrement,
                     (IntPtr) rPtr, rightOffset, rightOut.Length, rightIncrement);
         }
-        
+
         public void WriteSampleFloat(int count, IntPtr leftOut, int leftOffset, int leftOutLength, int leftIncrement,
             IntPtr rightOut, int rightOffset, int rightOutLength, int rightIncrement)
         {
@@ -862,6 +862,12 @@ namespace NFluidsynth
             }
 
             return true;
+        }
+
+        public int AllNotesOff(int channel)
+        {
+            ThrowIfDisposed();
+            return LibFluidsynth.fluid_synth_all_notes_off(Handle, channel);
         }
     }
 }
