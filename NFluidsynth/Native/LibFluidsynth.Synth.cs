@@ -304,5 +304,8 @@ namespace NFluidsynth.Native
 
         [DllImport(LibraryName)]
         internal static extern int fluid_synth_handle_midi_event(IntPtr data, fluid_midi_event_t_ptr @event);
+
+        [DllImport(LibraryName)]
+        internal static extern int fluid_synth_all_notes_off(fluid_synth_t_ptr synth, int channel);
     }
 }
