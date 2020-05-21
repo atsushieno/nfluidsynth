@@ -75,7 +75,7 @@ namespace NFluidsynth
             {
                 wrapper = (time, @event, seq, data) =>
                 {
-                    using (var ev = new MidiEvent(@event))
+                    using (var ev = new SequencerEvent(@event))
                     {
                         callback(time, ev);
                     }
@@ -144,7 +144,7 @@ namespace NFluidsynth
             LibFluidsynth.fluid_sequencer_process(Handle, msec);
         }
 
-        public void SendNow(MidiEvent evt)
+        public void SendNow(SequencerEvent evt)
         {
             ThrowIfDisposed();
 
@@ -153,7 +153,7 @@ namespace NFluidsynth
             LibFluidsynth.fluid_sequencer_send_now(Handle, evt.Handle);
         }
 
-        public void SendAt(MidiEvent evt, uint time, bool absolute)
+        public void SendAt(SequencerEvent evt, uint time, bool absolute)
         {
             ThrowIfDisposed();
 

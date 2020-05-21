@@ -61,4 +61,33 @@ namespace NFluidsynth
         Playing,
         Done,
     }
+
+    // event.h
+
+    public enum FluidSequencerEventType
+    {
+        Note = 0,
+        NoteOn,
+        NoteOff,
+        AllSoundsOff,
+        AllNotesOff,
+        BankSelect,
+        ProgramChange,
+        ProgramSelect,
+        PitchBend,
+        PitchWheelSensitivity,
+        Modulation,
+        Sustain,
+        ControlChange,
+        Pan,
+        Volume,
+        ReverbSend,
+        ChorusSend,
+        Timer,
+        AnyControlChange,
+        ChannelPressure,
+        KeyPressure,
+        SystemReset,
+        Unregistering,
+    }
 }

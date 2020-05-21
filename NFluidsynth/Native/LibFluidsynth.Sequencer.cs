@@ -1,6 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
-using fluid_midi_event_t_ptr = System.IntPtr;
+using fluid_event_t_ptr = System.IntPtr;
 using fluid_sequencer_t_ptr = System.IntPtr;
 using fluid_seq_id_t = System.Int16;
 
@@ -8,7 +8,7 @@ namespace NFluidsynth.Native
 {
     internal static partial class LibFluidsynth
     {
-        internal unsafe delegate void fluid_event_callback_t(uint time, fluid_midi_event_t_ptr @event,
+        internal unsafe delegate void fluid_event_callback_t(uint time, fluid_event_t_ptr @event,
             fluid_sequencer_t_ptr seq, void* data);
 
         [DllImport(LibraryName)]
@@ -44,10 +44,10 @@ namespace NFluidsynth.Native
         internal static extern void fluid_sequencer_process(fluid_sequencer_t_ptr seq, uint msec);
 
         [DllImport(LibraryName)]
-        internal static extern void fluid_sequencer_send_now(fluid_sequencer_t_ptr seq, fluid_midi_event_t_ptr evt);
+        internal static extern void fluid_sequencer_send_now(fluid_sequencer_t_ptr seq, fluid_event_t_ptr evt);
 
         [DllImport(LibraryName)]
-        internal static extern int fluid_sequencer_send_at(fluid_sequencer_t_ptr seq, fluid_midi_event_t_ptr evt, uint
+        internal static extern int fluid_sequencer_send_at(fluid_sequencer_t_ptr seq, fluid_event_t_ptr evt, uint
             time, int absolute);
 
         [DllImport(LibraryName)]

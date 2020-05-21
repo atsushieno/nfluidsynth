@@ -1,4 +1,4 @@
 namespace NFluidsynth
 {
-    public delegate void SequencerEventCallback(uint time, MidiEvent @event);
+    public delegate void SequencerEventCallback(uint time, SequencerEvent @event);
 }
