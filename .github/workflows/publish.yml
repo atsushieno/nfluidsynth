@@ -1,0 +1,16 @@
+name: publish to nuget
+on:
+  push:
+    branches:
+      - master # Default release branch
+
+jobs:
+  publish:
+    name: upload to NuGet server
+    runs-on: ubuntu-latest
+    steps:
+      - name: create nupkg
+        run: nuget pack
+      - name: upload
+        run: nuget push `ls *.nupkg` ${{ secrets.NUGET }}
+
