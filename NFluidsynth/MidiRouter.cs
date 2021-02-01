@@ -38,16 +38,19 @@ namespace NFluidsynth
 
         public void SetDefaultRules()
         {
+            ThrowIfDisposed();
             LibFluidsynth.fluid_midi_router_set_default_rules(Handle);
         }
 
         public void ClearRules()
         {
+            ThrowIfDisposed();
             LibFluidsynth.fluid_midi_router_clear_rules(Handle);
         }
 
         public void AddRule(MidiRouterRule rule, FluidMidiRouterRuleType type)
         {
+            ThrowIfDisposed();
             LibFluidsynth.fluid_midi_router_add_rule(Handle, rule.Handle, type);
         }
     }
