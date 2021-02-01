@@ -2,7 +2,6 @@
   <PropertyGroup>
     <RootNamespace>NFluidsynth</RootNamespace>
     <AssemblyName>NFluidsynth</AssemblyName>
-    <TargetFrameworks>net472;netstandard2.0;netcoreapp3.0</TargetFrameworks>
     <Copyright>atsushi</Copyright>
     <Authors>atsushi</Authors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -11,9 +10,10 @@
     <Description>.NET binding to Fluidsynth.</Description>
     <PackageProjectUrl>https://github.com/space-wizards/nfluidsynth</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <TargetFrameworks>net472;netcoreapp3.1;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
