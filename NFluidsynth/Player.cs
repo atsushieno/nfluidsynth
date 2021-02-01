@@ -74,6 +74,12 @@ namespace NFluidsynth
             ThrowIfDisposed();
             LibFluidsynth.fluid_player_set_loop(Handle, loop);
         }
+        
+        public void Seek(int tick)
+        {
+            ThrowIfDisposed();
+            LibFluidsynth.fluid_player_seek(Handle, tick);
+        }
 
         [Obsolete("Use " + nameof(MidiTempo) + " property instead.")]
         public void SetTempo(int tempo)
