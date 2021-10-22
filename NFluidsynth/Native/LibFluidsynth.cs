@@ -19,6 +19,15 @@ namespace NFluidsynth.Native
                 {
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
+                        // Assumption here is that this binds against whatever API .2 is,
+                        //  but will try the general name anyway just in case.
+                        try
+                        {
+                            return NativeLibrary.Load("libfluidsynth.so.2");
+                        }
+                        catch (Exception ex)
+                        {
+                        }
                         return NativeLibrary.Load("libfluidsynth.so");
                     }
 
