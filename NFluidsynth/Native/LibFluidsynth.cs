@@ -13,32 +13,40 @@ namespace NFluidsynth.Native
 #if NETCOREAPP
         static LibFluidsynth()
         {
-            NativeLibrary.SetDllImportResolver(typeof(LibFluidsynth).Assembly, (name, assembly, path) =>
+            try
             {
-                if (name == LibraryName)
+                NativeLibrary.SetDllImportResolver(typeof(LibFluidsynth).Assembly, (name, assembly, path) =>
                 {
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                    IntPtr handle;
+                    if (name == LibraryName)
                     {
-                        // Assumption here is that this binds against whatever API .2 is,
-                        //  but will try the general name anyway just in case.
-                        try
+                        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                         {
-                            return NativeLibrary.Load("libfluidsynth.so.2");
+                            // Assumption here is that this binds against whatever API .2 is,
+                            //  but will try the general name anyway just in case.
+                            if (NativeLibrary.TryLoad("libfluidsynth.so.2", assembly, path, out handle))
+                                return handle;
+
+                            if (NativeLibrary.TryLoad("libfluidsynth.so", assembly, path, out handle))
+                                return handle;
                         }
-                        catch (Exception ex)
+
+                        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                         {
+                            if (NativeLibrary.TryLoad("libfluidsynth.dylib", assembly, path, out handle))
+                                return handle;
                         }
-                        return NativeLibrary.Load("libfluidsynth.so");
                     }
 
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                    {
-                        return NativeLibrary.Load("libfluidsynth.dylib");
-                    }
-                }
-
-                return IntPtr.Zero;
-            });
+                    return IntPtr.Zero;
+                });
+            }
+            catch (Exception)
+            {
+                // An exception can be thrown in the above call if someone has already set a DllImportResolver.
+                // (Can occur if the application wants to override behaviour.)
+                // This does not throw away failures to resolve.
+            }
         }
 #endif
     }
