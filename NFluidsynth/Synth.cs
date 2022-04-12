@@ -261,11 +261,14 @@ namespace NFluidsynth
         // Then fluid_synth_start() takes fluid_preset_t* which is returned only by this deprecated function, so I don't bind it either.
         // Then fluid_synth_stop() is paired by the function above, so I don't bind it either.
 
-        public void LoadSoundFont(string filename, bool resetPresets)
+        public uint LoadSoundFont(string filename, bool resetPresets)
         {
             ThrowIfDisposed();
-            if (LibFluidsynth.fluid_synth_sfload(Handle, filename, resetPresets) < 0)
+            int result = LibFluidsynth.fluid_synth_sfload(Handle, filename, resetPresets);
+            if (result < 0)
                 OnError("sound font load operation failed");
+
+            return (uint) result;
         }
 
         public void ReloadSoundFont(uint id)
